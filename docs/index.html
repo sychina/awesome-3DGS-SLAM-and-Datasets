@@ -1,109 +1,474 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="A curated and maintainable 3DGS-SLAM paper and dataset hub." />
   <title>Awesome 3DGS-SLAM & Datasets</title>
   <style>
-    :root { --bg:#f7f8fb; --card:#ffffff; --text:#172033; --muted:#667085; --line:#e5e7eb; --accent:#365df0; }
+    :root {
+      --bg: #070a13;
+      --bg-soft: #0e1324;
+      --card: rgba(255,255,255,.075);
+      --card-strong: rgba(255,255,255,.12);
+      --text: #f8fafc;
+      --muted: #a8b3cf;
+      --muted-2: #7f8aa8;
+      --line: rgba(255,255,255,.14);
+      --accent: #8b5cf6;
+      --accent-2: #22d3ee;
+      --good: #34d399;
+      --warn: #fbbf24;
+      --bad: #fb7185;
+      --shadow: 0 24px 70px rgba(0,0,0,.35);
+      --radius: 24px;
+      --radius-sm: 14px;
+      --max: 1240px;
+    }
     * { box-sizing: border-box; }
-    body { margin:0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", Arial, sans-serif; background:var(--bg); color:var(--text); }
-    header { padding:48px 24px 28px; background:linear-gradient(135deg,#101828,#243b8f); color:white; }
-    header h1 { margin:0 0 12px; font-size:clamp(28px,5vw,48px); }
-    header p { max-width:980px; margin:0; color:#dbe4ff; line-height:1.7; }
-    main { max-width:1180px; margin:0 auto; padding:28px 20px 56px; }
-    .panel { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:18px; box-shadow:0 8px 24px rgba(16,24,40,.06); margin-bottom:20px; }
-    .controls { display:grid; grid-template-columns: 1.4fr repeat(3, minmax(140px, .6fr)); gap:12px; align-items:center; }
-    input, select { width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:12px; font-size:14px; background:white; }
-    table { width:100%; border-collapse:separate; border-spacing:0; overflow:hidden; border-radius:14px; border:1px solid var(--line); background:white; }
-    th, td { padding:12px 12px; border-bottom:1px solid var(--line); vertical-align:top; font-size:14px; }
-    th { text-align:left; background:#f2f4f7; font-weight:700; color:#344054; position:sticky; top:0; }
-    tr:last-child td { border-bottom:0; }
-    a { color:var(--accent); text-decoration:none; }
-    a:hover { text-decoration:underline; }
-    .tag { display:inline-block; border:1px solid #c7d7fe; color:#2f55d4; background:#eef4ff; border-radius:999px; padding:2px 8px; margin:2px 4px 2px 0; font-size:12px; }
-    .muted { color:var(--muted); }
-    .grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap:16px; }
-    .dataset-card h3 { margin:0 0 8px; }
-    .dataset-card p { margin:6px 0; line-height:1.55; }
-    .notice { border-left:4px solid var(--accent); padding:12px 14px; background:#eef4ff; border-radius:12px; color:#1d2939; }
-    @media (max-width: 800px) { .controls { grid-template-columns:1fr; } table { display:block; overflow-x:auto; } }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(circle at 8% 5%, rgba(139,92,246,.45), transparent 30rem),
+        radial-gradient(circle at 92% 12%, rgba(34,211,238,.28), transparent 28rem),
+        radial-gradient(circle at 50% 105%, rgba(99,102,241,.25), transparent 28rem),
+        var(--bg);
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font: inherit; }
+    .site-shell { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
+    .hero { padding: 56px 0 24px; position: relative; }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 42px; }
+    .brand { display: flex; align-items: center; gap: 12px; color: white; font-weight: 780; letter-spacing: -.02em; }
+    .logo {
+      width: 42px; height: 42px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: grid; place-items: center; box-shadow: 0 14px 36px rgba(139,92,246,.35);
+    }
+    .nav-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+    .btn {
+      border: 1px solid var(--line); color: var(--text); background: rgba(255,255,255,.08);
+      padding: 10px 14px; border-radius: 999px; display: inline-flex; align-items: center; gap: 8px;
+      cursor: pointer; transition: transform .18s ease, background .18s ease, border .18s ease;
+    }
+    .btn:hover { transform: translateY(-1px); background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.24); }
+    .btn.primary { background: linear-gradient(135deg, var(--accent), #5b7cfa); border: 0; box-shadow: 0 18px 40px rgba(139,92,246,.35); }
+    .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 24px; align-items: stretch; }
+    .hero-card, .panel, .paper-card, .dataset-card {
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.065));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      border-radius: var(--radius);
+    }
+    .hero-card { padding: clamp(26px, 5vw, 48px); overflow: hidden; position: relative; }
+    .hero-card:after {
+      content: ""; position: absolute; inset: auto -120px -180px auto; width: 340px; height: 340px;
+      background: radial-gradient(circle, rgba(34,211,238,.34), transparent 67%); pointer-events: none;
+    }
+    .eyebrow { color: #c4b5fd; font-weight: 760; letter-spacing: .08em; text-transform: uppercase; font-size: 12px; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: clamp(34px, 7vw, 72px); line-height: .98; letter-spacing: -.065em; }
+    .subtitle { margin: 22px 0 0; color: var(--muted); font-size: clamp(16px, 2vw, 19px); line-height: 1.75; max-width: 760px; }
+    .hero-links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+    .stat-card { padding: 24px; display: grid; gap: 14px; }
+    .stat-row { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+    .stat { padding: 18px; border-radius: 20px; background: rgba(255,255,255,.07); border: 1px solid var(--line); }
+    .stat .num { display: block; font-size: 34px; font-weight: 860; letter-spacing: -.04em; }
+    .stat .label { color: var(--muted); font-size: 13px; }
+    .private-note { padding: 16px; border-radius: 18px; border: 1px solid rgba(251,191,36,.35); background: rgba(251,191,36,.09); color: #fde68a; line-height: 1.55; }
+    .filters { position: sticky; top: 0; z-index: 20; padding: 12px 0 18px; background: linear-gradient(180deg, rgba(7,10,19,.96), rgba(7,10,19,.78), rgba(7,10,19,0)); backdrop-filter: blur(14px); }
+    .filter-panel { padding: 16px; }
+    .control-grid { display: grid; grid-template-columns: 1.45fr .65fr .65fr auto; gap: 12px; align-items: center; }
+    .search-wrap { position: relative; }
+    .search-wrap span { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted-2); }
+    input, select {
+      width: 100%; border: 1px solid var(--line); background: rgba(255,255,255,.08); color: var(--text);
+      padding: 13px 14px; border-radius: 16px; outline: 0;
+    }
+    input { padding-left: 42px; }
+    select option { color: #111827; }
+    input:focus, select:focus { border-color: rgba(139,92,246,.8); box-shadow: 0 0 0 4px rgba(139,92,246,.18); }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .chip {
+      border: 1px solid var(--line); background: rgba(255,255,255,.06); color: var(--muted);
+      border-radius: 999px; padding: 8px 11px; cursor: pointer; transition: all .18s ease;
+    }
+    .chip:hover, .chip.active { color: white; background: rgba(139,92,246,.34); border-color: rgba(139,92,246,.68); }
+    main { padding: 6px 0 70px; }
+    .section-title { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin: 30px 0 14px; }
+    .section-title h2 { margin: 0; font-size: clamp(24px, 4vw, 36px); letter-spacing: -.04em; }
+    .section-title p { margin: 6px 0 0; color: var(--muted); line-height: 1.6; }
+    .count { color: var(--muted); white-space: nowrap; }
+    .papers-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
+    .paper-card { overflow: hidden; display: grid; grid-template-columns: 142px minmax(0,1fr); min-height: 236px; transition: transform .18s ease, border-color .18s ease, background .18s ease; }
+    .paper-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,.28); background: linear-gradient(180deg, rgba(255,255,255,.13), rgba(255,255,255,.08)); }
+    .thumb { position: relative; min-height: 100%; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; border-right: 1px solid var(--line); }
+    .thumb:before { content: ""; position: absolute; inset: 0; background: var(--thumb-bg); opacity: .96; }
+    .thumb:after { content: ""; position: absolute; inset: 0; background-image: radial-gradient(circle at 25% 28%, rgba(255,255,255,.55) 0 2px, transparent 3px), radial-gradient(circle at 72% 62%, rgba(255,255,255,.35) 0 3px, transparent 4px), linear-gradient(135deg, transparent 0 42%, rgba(255,255,255,.22) 43% 44%, transparent 45%); opacity: .7; }
+    .thumb > * { position: relative; z-index: 1; }
+    .year-badge { align-self: flex-start; border: 1px solid rgba(255,255,255,.38); background: rgba(0,0,0,.18); border-radius: 999px; padding: 7px 10px; font-weight: 800; }
+    .thumb-title { font-weight: 900; font-size: 32px; letter-spacing: -.08em; color: white; text-shadow: 0 8px 28px rgba(0,0,0,.35); }
+    .paper-body { padding: 18px; display: flex; flex-direction: column; gap: 11px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; color: var(--muted); font-size: 13px; }
+    .venue { color: #bae6fd; }
+    .paper-title { margin: 0; font-size: 18px; line-height: 1.34; letter-spacing: -.025em; }
+    .paper-title a:hover { color: #c4b5fd; }
+    .summary { color: var(--muted); line-height: 1.62; margin: 0; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag { border: 1px solid rgba(125,211,252,.28); background: rgba(14,165,233,.10); color: #bae6fd; border-radius: 999px; padding: 5px 8px; font-size: 12px; }
+    .tag.modality { border-color: rgba(167,139,250,.36); background: rgba(139,92,246,.13); color: #ddd6fe; }
+    .card-footer { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+    .links { display: flex; gap: 8px; flex-wrap: wrap; }
+    .link-pill { border: 1px solid var(--line); background: rgba(255,255,255,.06); color: var(--text); border-radius: 999px; padding: 7px 10px; font-size: 13px; }
+    .link-pill:hover { background: rgba(255,255,255,.14); }
+    .eval { font-size: 12px; border-radius: 999px; padding: 6px 9px; border: 1px solid var(--line); color: var(--muted); }
+    .eval.tested { color: #bbf7d0; border-color: rgba(52,211,153,.34); background: rgba(52,211,153,.10); }
+    .eval.pending { color: #fde68a; border-color: rgba(251,191,36,.34); background: rgba(251,191,36,.10); }
+    .abstract { display: none; color: var(--muted); border-top: 1px solid var(--line); padding-top: 10px; line-height: 1.62; }
+    .paper-card.open .abstract { display: block; }
+    .toggle { color: #c4b5fd; background: none; border: 0; padding: 0; cursor: pointer; }
+    .datasets-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; }
+    .dataset-card { padding: 18px; box-shadow: none; }
+    .dataset-card h3 { margin: 0 0 8px; font-size: 18px; }
+    .dataset-card p { margin: 8px 0; color: var(--muted); line-height: 1.58; }
+    .empty { padding: 32px; text-align: center; color: var(--muted); border: 1px dashed var(--line); border-radius: var(--radius); background: rgba(255,255,255,.04); }
+    .toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%) translateY(18px); opacity: 0; pointer-events: none; background: rgba(15,23,42,.94); border: 1px solid var(--line); color: white; border-radius: 999px; padding: 12px 16px; box-shadow: var(--shadow); transition: .2s ease; z-index: 50; }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    @media (max-width: 1040px) { .hero-grid { grid-template-columns: 1fr; } .papers-grid { grid-template-columns: 1fr; } .datasets-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+    @media (max-width: 760px) { .site-shell { width: min(100% - 22px, var(--max)); } .nav { align-items: flex-start; flex-direction: column; } .control-grid { grid-template-columns: 1fr; } .paper-card { grid-template-columns: 1fr; } .thumb { min-height: 145px; border-right: 0; border-bottom: 1px solid var(--line); } .datasets-grid { grid-template-columns: 1fr; } .filters { position: relative; } }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Awesome 3DGS-SLAM & Datasets</h1>
-    <p>用于维护 3D Gaussian Splatting SLAM 文献、数据集、代码与复现实验状态的公开页面。私有测试结果不应进入此 HTML；本页面只展示 public-safe 字段。</p>
-  </header>
-  <main>
-    <section class="panel">
-      <div class="notice"><strong>Private results policy:</strong> raw local benchmark numbers should stay in <code>private/results.local.csv</code> and be excluded by <code>.gitignore</code>. Public pages only show a coarse local status.</div>
-    </section>
+  <header class="hero">
+    <div class="site-shell">
+      <nav class="nav">
+        <a class="brand" href="#top" aria-label="Home">
+          <span class="logo" aria-hidden="true">GS</span>
+          <span>3DGS-SLAM Hub</span>
+        </a>
+        <div class="nav-actions">
+          <a class="btn" href="../README.md">README</a>
+          <a class="btn" href="#datasets">Datasets</a>
+          <a class="btn primary" href="https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME">GitHub Repo</a>
+        </div>
+      </nav>
 
-    <section class="panel">
-      <div class="controls">
-        <input id="q" placeholder="Search title, summary, dataset, tag..." />
-        <select id="modality"><option value="">All modalities</option></select>
-        <select id="year"><option value="">All years</option></select>
-        <select id="tag"><option value="">All tags</option></select>
+      <div class="hero-grid" id="top">
+        <section class="hero-card">
+          <div class="eyebrow">Curated literature tracker</div>
+          <h1>Awesome 3DGS-SLAM & Datasets</h1>
+          <p class="subtitle">A maintainable, GitHub Pages-ready literature hub for 3D Gaussian Splatting SLAM, radiance-field SLAM variants, benchmark datasets, code links, and reproducibility status.</p>
+          <div class="hero-links">
+            <a class="btn primary" href="#papers">Browse papers</a>
+            <a class="btn" href="#datasets">Browse datasets</a>
+            <button class="btn" id="copyPageLink" type="button">Copy page link</button>
+          </div>
+        </section>
+        <aside class="stat-card hero-card" aria-label="Repository statistics">
+          <div class="stat-row">
+            <div class="stat"><span class="num" id="paperCount">0</span><span class="label">papers</span></div>
+            <div class="stat"><span class="num" id="datasetCount">0</span><span class="label">datasets</span></div>
+            <div class="stat"><span class="num" id="yearCount">0</span><span class="label">years</span></div>
+            <div class="stat"><span class="num" id="codeCount">0</span><span class="label">code links</span></div>
+          </div>
+          <div class="private-note"><strong>Private results policy:</strong> raw benchmark numbers stay in <code>private/results.local.csv</code>. This public page only shows coarse local status such as <em>not tested</em> or <em>reproduce pending</em>.</div>
+        </aside>
       </div>
+    </div>
+  </header>
+
+  <section class="filters">
+    <div class="site-shell">
+      <div class="panel filter-panel">
+        <div class="control-grid">
+          <label class="search-wrap">
+            <span aria-hidden="true">Search</span>
+            <input id="query" type="search" placeholder="Search title, authors, datasets, tags, summary..." autocomplete="off" />
+          </label>
+          <select id="yearFilter" aria-label="Filter by year"><option value="">All years</option></select>
+          <select id="modalityFilter" aria-label="Filter by modality"><option value="">All modalities</option></select>
+          <button class="btn" id="clearFilters" type="button">Clear filters</button>
+        </div>
+        <div class="chips" id="tagChips" aria-label="Tag filters"></div>
+      </div>
+    </div>
+  </section>
+
+  <main class="site-shell">
+    <section id="papers">
+      <div class="section-title">
+        <div>
+          <h2>Papers</h2>
+          <p>Card-style browsing inspired by public awesome-list pages: search, filter by year/modality/tag, open links, and expand abstracts.</p>
+        </div>
+        <div class="count" id="visibleCount">0 papers shown</div>
+      </div>
+      <div class="papers-grid" id="papersGrid"></div>
     </section>
 
-    <section class="panel">
-      <h2>Papers</h2>
-      <table id="papers">
-        <thead><tr><th>Year</th><th>Venue</th><th>Paper</th><th>Modality</th><th>Representation</th><th>Datasets</th><th>Tags</th><th>Summary</th><th>Local Eval</th></tr></thead>
-        <tbody></tbody>
-      </table>
-    </section>
-
-    <section class="panel">
-      <h2>Datasets</h2>
-      <div id="datasets" class="grid"></div>
+    <section id="datasets">
+      <div class="section-title">
+        <div>
+          <h2>Datasets</h2>
+          <p>Common benchmarks for RGB-D, monocular/RGB-only, stereo/VIO, indoor reconstruction, and outdoor SLAM variants.</p>
+        </div>
+      </div>
+      <div class="datasets-grid" id="datasetsGrid"></div>
     </section>
   </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Copied</div>
+
   <script>
     const papers = [
-      {id:'gs_slam_2024',year:2024,venue:'CVPR Highlight',title:'GS-SLAM: Dense Visual SLAM with 3D Gaussian Splatting',paper:'https://gs-slam.github.io/',code:'https://github.com/yanchi-3dv/diff-gaussian-rasterization-for-gsslam',modality:['RGB-D'],representation:'3DGS',datasets:['Replica','TUM RGB-D'],tags:['dense-slam','coarse-to-fine-tracking','adaptive-expansion'],summary:'Differentiable splatting pipeline with adaptive Gaussian expansion/pruning and coarse-to-fine camera tracking for real-time dense RGB-D SLAM.',local_eval:'reproduce pending'},
-      {id:'splatam_2024',year:2024,venue:'CVPR',title:'SplaTAM: Splat, Track & Map 3D Gaussians for Dense RGB-D SLAM',paper:'https://spla-tam.github.io/',code:'https://github.com/spla-tam/SplaTAM',modality:['RGB-D'],representation:'3DGS',datasets:['Replica','TUM RGB-D','ScanNet'],tags:['dense-slam','online-mapping','silhouette-mask'],summary:'Online dense RGB-D SLAM using explicit 3D Gaussians and silhouette-aware map expansion.',local_eval:'reproduce pending'},
-      {id:'monogs_2024',year:2024,venue:'CVPR Highlight',title:'Gaussian Splatting SLAM / MonoGS',paper:'https://rmurai.co.uk/projects/GaussianSplattingSLAM/',code:'https://github.com/muskie82/MonoGS',modality:['Monocular','Stereo','RGB-D'],representation:'3DGS',datasets:['TUM RGB-D','Replica'],tags:['monocular','multi-sensor','real-time'],summary:'Monocular-first 3DGS SLAM system, with repository support for stereo and RGB-D inputs.',local_eval:'reproduce pending'},
-      {id:'splat_slam_2024',year:2024,venue:'arXiv / CVPRW 2025',title:'Splat-SLAM: Globally Optimized RGB-only SLAM with 3D Gaussians',paper:'https://arxiv.org/abs/2405.16544',code:'https://github.com/eriksandstroem/Splat-SLAM',modality:['RGB-only'],representation:'3DGS',datasets:['Replica','TUM RGB-D','ScanNet'],tags:['rgb-only','global-optimization','loop-closure'],summary:'RGB-only dense SLAM using globally optimized tracking and dynamic updates to a dense Gaussian map.',local_eval:'not tested'},
-      {id:'gaus_slam_2025',year:2025,venue:'arXiv',title:'GauS-SLAM: Dense RGB-D SLAM with Gaussian Surfels',paper:'https://github.com/gaus-slam/gaus-slam',code:'https://github.com/gaus-slam/gaus-slam',modality:['RGB-D'],representation:'Gaussian surfels',datasets:['Replica','TUM RGB-D','ScanNet','ScanNet++'],tags:['surfel','dense-slam','scannet++'],summary:'Dense RGB-D SLAM using surface-oriented Gaussian surfels for localization and high-fidelity reconstruction.',local_eval:'not tested'}
+      {
+        id: 'gs_slam_2024', year: 2024, venue: 'CVPR Highlight',
+        title: 'GS-SLAM: Dense Visual SLAM with 3D Gaussian Splatting',
+        authors: 'Yan Chi, et al.',
+        paper: 'https://gs-slam.github.io/',
+        code: 'https://github.com/yanchi-3dv/diff-gaussian-rasterization-for-gsslam',
+        project: 'https://gs-slam.github.io/',
+        modality: ['RGB-D'], representation: '3DGS',
+        datasets: ['Replica', 'TUM RGB-D'],
+        tags: ['dense-slam', 'tracking', 'mapping', 'rgb-d', 'code', 'project'],
+        summary: 'Differentiable splatting pipeline with adaptive Gaussian expansion/pruning and coarse-to-fine camera tracking for real-time dense RGB-D SLAM.',
+        abstract: 'A representative RGB-D 3DGS-SLAM method. Track implementation details such as camera tracking objective, Gaussian expansion policy, pruning, rendering speed, and dataset protocol.',
+        local_eval: 'reproduce pending'
+      },
+      {
+        id: 'splatam_2024', year: 2024, venue: 'CVPR',
+        title: 'SplaTAM: Splat, Track & Map 3D Gaussians for Dense RGB-D SLAM',
+        authors: 'Nikhil Keetha, et al.',
+        paper: 'https://spla-tam.github.io/',
+        code: 'https://github.com/spla-tam/SplaTAM',
+        project: 'https://spla-tam.github.io/',
+        modality: ['RGB-D'], representation: '3DGS',
+        datasets: ['Replica', 'TUM RGB-D', 'ScanNet'],
+        tags: ['dense-slam', 'online-mapping', 'rgb-d', 'code', 'project'],
+        summary: 'Online dense RGB-D SLAM using explicit 3D Gaussians and silhouette-aware map expansion.',
+        abstract: 'Useful baseline for dense online mapping. When reproducing, record tracking loss, mapping schedule, number of Gaussians, memory, ATE protocol, and rendering metrics.',
+        local_eval: 'reproduce pending'
+      },
+      {
+        id: 'monogs_2024', year: 2024, venue: 'CVPR Highlight',
+        title: 'Gaussian Splatting SLAM / MonoGS',
+        authors: 'Hidenobu Matsuki, Riku Murai, et al.',
+        paper: 'https://rmurai.co.uk/projects/GaussianSplattingSLAM/',
+        code: 'https://github.com/muskie82/MonoGS',
+        project: 'https://rmurai.co.uk/projects/GaussianSplattingSLAM/',
+        modality: ['Monocular', 'Stereo', 'RGB-D'], representation: '3DGS',
+        datasets: ['TUM RGB-D', 'Replica'],
+        tags: ['monocular', 'stereo', 'rgb-d', 'real-time', 'code', 'project'],
+        summary: 'Monocular-first 3DGS SLAM system, with repository support for stereo and RGB-D inputs.',
+        abstract: 'Good anchor paper for comparing monocular, stereo, and RGB-D input modes under a common Gaussian-map formulation.',
+        local_eval: 'reproduce pending'
+      },
+      {
+        id: 'splat_slam_2024', year: 2024, venue: 'arXiv / CVPRW 2025',
+        title: 'Splat-SLAM: Globally Optimized RGB-only SLAM with 3D Gaussians',
+        authors: 'Erik Sandstrom, et al.',
+        paper: 'https://arxiv.org/abs/2405.16544',
+        code: 'https://github.com/eriksandstroem/Splat-SLAM',
+        project: '',
+        modality: ['RGB-only', 'Monocular'], representation: '3DGS + global optimization',
+        datasets: ['Replica', 'TUM RGB-D', 'ScanNet'],
+        tags: ['rgb-only', 'global-optimization', 'loop-closure', 'code'],
+        summary: 'RGB-only dense SLAM using globally optimized tracking and dynamic updates to a dense Gaussian map.',
+        abstract: 'Useful for studying RGB-only settings where depth is not directly available and global optimization becomes important.',
+        local_eval: 'not tested'
+      },
+      {
+        id: 'gaus_slam_2025', year: 2025, venue: 'arXiv',
+        title: 'GauS-SLAM: Dense RGB-D SLAM with Gaussian Surfels',
+        authors: 'GauS-SLAM authors',
+        paper: 'https://github.com/gaus-slam/gaus-slam',
+        code: 'https://github.com/gaus-slam/gaus-slam',
+        project: '',
+        modality: ['RGB-D'], representation: 'Gaussian surfels / surface-aligned GS',
+        datasets: ['Replica', 'TUM RGB-D', 'ScanNet', 'ScanNet++'],
+        tags: ['surfel', 'dense-slam', 'rgb-d', 'scannet++', 'code'],
+        summary: 'Dense RGB-D SLAM using surface-oriented Gaussian surfels for localization and high-fidelity reconstruction.',
+        abstract: 'Track this family separately from volumetric ellipsoid 3DGS methods because the surface representation can change geometry and rendering trade-offs.',
+        local_eval: 'not tested'
+      },
+      {
+        id: '2dgs_slam_2025', year: 2025, venue: 'arXiv',
+        title: '2DGS-SLAM: Globally Consistent RGB-D SLAM with 2D Gaussian Splatting',
+        authors: 'PRBonn, et al.',
+        paper: 'https://arxiv.org/html/2506.00970v1',
+        code: 'https://github.com/PRBonn/2DGS-SLAM',
+        project: '',
+        modality: ['RGB-D'], representation: '2D Gaussian primitives',
+        datasets: ['Replica', 'ScanNet', 'TUM RGB-D'],
+        tags: ['2dgs', 'global-consistency', 'rgb-d', 'surface', 'code'],
+        summary: 'RGB-D SLAM variant focused on globally consistent mapping with surface-aligned 2D Gaussian primitives.',
+        abstract: 'Good candidate for the representation taxonomy because it connects 2DGS/surface splatting with SLAM consistency.',
+        local_eval: 'not tested'
+      }
     ];
+
     const datasets = [
-      {name:'Replica',type:'Synthetic / reconstructed indoor',url:'https://github.com/facebookresearch/Replica-Dataset',sensors:'mesh, rendered RGB-D, semantic labels',gt:'dense geometry and semantic annotations',notes:'Controlled indoor benchmark often used for rendering and reconstruction quality.'},
-      {name:'TUM RGB-D',type:'Real indoor RGB-D',url:'https://cvg.cit.tum.de/data/datasets/rgbd-dataset',sensors:'RGB, depth, accelerometer',gt:'motion-capture camera trajectory',notes:'Classic RGB-D SLAM benchmark; always report sequence name and alignment protocol.'},
-      {name:'ScanNet',type:'Real indoor RGB-D video',url:'https://www.scan-net.org/',sensors:'RGB-D video, poses, reconstructions, semantics',gt:'poses, 3D reconstructions, semantic and instance labels',notes:'Access approval may be required; use official splits when possible.'},
-      {name:'ScanNet++',type:'High-fidelity real indoor',url:'https://scannetpp.mlsg.cit.tum.de/scannetpp/',sensors:'laser scans, DSLR images, iPhone RGB-D',gt:'high-quality geometry and semantic annotations',notes:'Useful for high-fidelity reconstruction and NVS-oriented SLAM evaluation.'},
-      {name:'EuRoC MAV',type:'Visual-inertial MAV',url:'https://projects.asl.ethz.ch/datasets/euroc-mav/',sensors:'stereo cameras, IMU',gt:'accurate motion and structure ground truth',notes:'Useful for stereo/VIO variants of Gaussian-map SLAM.'},
-      {name:'KITTI Odometry',type:'Outdoor driving',url:'https://www.cvlibs.net/datasets/kitti/eval_odometry.php',sensors:'stereo, LiDAR-compatible benchmark',gt:'GT trajectories for training sequences 00-10',notes:'Useful for large-scale outdoor and LiDAR/vision SLAM.'}
+      { name: 'Replica', type: 'Synthetic / reconstructed indoor', url: 'https://github.com/facebookresearch/Replica-Dataset', sensors: 'Mesh, rendered RGB-D, semantic labels', gt: 'Dense geometry and semantic annotations', notes: 'Controlled indoor benchmark often used for rendering and reconstruction quality.' },
+      { name: 'TUM RGB-D', type: 'Real indoor RGB-D', url: 'https://cvg.cit.tum.de/data/datasets/rgbd-dataset', sensors: 'RGB, depth, accelerometer', gt: 'Motion-capture camera trajectory', notes: 'Classic RGB-D SLAM benchmark; always report sequence name and alignment protocol.' },
+      { name: 'ScanNet', type: 'Real indoor RGB-D video', url: 'https://www.scan-net.org/', sensors: 'RGB-D video, poses, reconstructions, semantics', gt: 'Poses, 3D reconstructions, semantic and instance labels', notes: 'Access approval may be required; use official splits when possible.' },
+      { name: 'ScanNet++', type: 'High-fidelity real indoor', url: 'https://scannetpp.mlsg.cit.tum.de/scannetpp/', sensors: 'Laser scans, DSLR images, iPhone RGB-D', gt: 'High-quality geometry and semantic annotations', notes: 'Useful for high-fidelity reconstruction and NVS-oriented SLAM evaluation.' },
+      { name: 'EuRoC MAV', type: 'Visual-inertial MAV', url: 'https://projects.asl.ethz.ch/datasets/euroc-mav/', sensors: 'Stereo cameras, IMU', gt: 'Accurate motion and structure ground truth', notes: 'Useful for stereo/VIO variants of Gaussian-map SLAM.' },
+      { name: 'KITTI Odometry', type: 'Outdoor driving', url: 'https://www.cvlibs.net/datasets/kitti/eval_odometry.php', sensors: 'Stereo, LiDAR-compatible benchmark', gt: 'GT trajectories for training sequences 00-10', notes: 'Useful for large-scale outdoor and LiDAR/vision SLAM.' }
     ];
-    const $ = s => document.querySelector(s);
-    const uniq = arr => [...new Set(arr.flat())].sort();
-    function fillFilters(){
-      uniq(papers.map(p=>p.modality)).forEach(v=>$('#modality').insertAdjacentHTML('beforeend',`<option>${v}</option>`));
-      uniq(papers.map(p=>[String(p.year)])).forEach(v=>$('#year').insertAdjacentHTML('beforeend',`<option>${v}</option>`));
-      uniq(papers.map(p=>p.tags)).forEach(v=>$('#tag').insertAdjacentHTML('beforeend',`<option>${v}</option>`));
+
+    const state = { query: '', year: '', modality: '', tag: '' };
+    const $ = (sel) => document.querySelector(sel);
+    const unique = (items) => [...new Set(items.flat().filter(Boolean))].sort((a,b) => String(a).localeCompare(String(b)));
+    const byYearDesc = (a,b) => Number(b) - Number(a);
+    const gradients = [
+      'linear-gradient(135deg, #7c3aed, #22d3ee)',
+      'linear-gradient(135deg, #2563eb, #a855f7)',
+      'linear-gradient(135deg, #0891b2, #4f46e5)',
+      'linear-gradient(135deg, #db2777, #7c3aed)',
+      'linear-gradient(135deg, #0f766e, #3b82f6)',
+      'linear-gradient(135deg, #9333ea, #06b6d4)'
+    ];
+
+    function showToast(message) {
+      const toast = $('#toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      window.setTimeout(() => toast.classList.remove('show'), 1600);
     }
-    function renderPapers(){
-      const q = $('#q').value.toLowerCase();
-      const modality = $('#modality').value;
-      const year = $('#year').value;
-      const tag = $('#tag').value;
-      const rows = papers
-        .filter(p => !q || JSON.stringify(p).toLowerCase().includes(q))
-        .filter(p => !modality || p.modality.includes(modality))
-        .filter(p => !year || String(p.year) === year)
-        .filter(p => !tag || p.tags.includes(tag))
-        .sort((a,b)=> b.year - a.year || a.title.localeCompare(b.title))
-        .map(p => `<tr><td>${p.year}</td><td>${p.venue}</td><td><a href="${p.paper}">${p.title}</a><br><span class="muted"><a href="${p.code}">code</a> · ${p.id}</span></td><td>${p.modality.join(', ')}</td><td>${p.representation}</td><td>${p.datasets.join(', ')}</td><td>${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</td><td>${p.summary}</td><td>${p.local_eval}</td></tr>`).join('');
-      $('#papers tbody').innerHTML = rows || '<tr><td colspan="9">No matches.</td></tr>';
+
+    function normalize(value) { return String(value || '').toLowerCase(); }
+    function textBlob(p) { return normalize([p.title, p.authors, p.venue, p.representation, p.summary, p.abstract, p.modality.join(' '), p.datasets.join(' '), p.tags.join(' ')].join(' ')); }
+
+    function filteredPapers() {
+      return papers
+        .filter(p => !state.query || textBlob(p).includes(normalize(state.query)))
+        .filter(p => !state.year || String(p.year) === state.year)
+        .filter(p => !state.modality || p.modality.includes(state.modality))
+        .filter(p => !state.tag || p.tags.includes(state.tag))
+        .sort((a,b) => b.year - a.year || a.title.localeCompare(b.title));
     }
-    function renderDatasets(){
-      $('#datasets').innerHTML = datasets.map(d => `<article class="panel dataset-card"><h3><a href="${d.url}">${d.name}</a></h3><p class="muted">${d.type}</p><p><strong>Sensors:</strong> ${d.sensors}</p><p><strong>Ground truth:</strong> ${d.gt}</p><p>${d.notes}</p></article>`).join('');
+
+    function evalClass(status) {
+      const s = normalize(status);
+      if (s.includes('tested')) return 'tested';
+      if (s.includes('pending') || s.includes('reproduce')) return 'pending';
+      return '';
     }
-    ['q','modality','year','tag'].forEach(id => document.addEventListener('input', e => { if(e.target.id === id) renderPapers(); }));
-    fillFilters(); renderPapers(); renderDatasets();
+
+    function cardLinks(p) {
+      const links = [];
+      if (p.paper) links.push(`<a class="link-pill" href="${p.paper}" target="_blank" rel="noreferrer">Paper</a>`);
+      if (p.project) links.push(`<a class="link-pill" href="${p.project}" target="_blank" rel="noreferrer">Project</a>`);
+      if (p.code) links.push(`<a class="link-pill" href="${p.code}" target="_blank" rel="noreferrer">Code</a>`);
+      return links.join('');
+    }
+
+    function renderPapers() {
+      const list = filteredPapers();
+      $('#visibleCount').textContent = `${list.length} of ${papers.length} papers shown`;
+      $('#papersGrid').innerHTML = list.length ? list.map((p, idx) => `
+        <article class="paper-card" data-id="${p.id}" style="--thumb-bg:${gradients[idx % gradients.length]}">
+          <div class="thumb" aria-hidden="true">
+            <span class="year-badge">${p.year}</span>
+            <span class="thumb-title">${p.representation.includes('2D') ? '2D' : '3D'}GS</span>
+          </div>
+          <div class="paper-body">
+            <div class="meta"><span class="venue">${p.venue}</span><span>•</span><span>${p.authors}</span></div>
+            <h3 class="paper-title"><a href="${p.paper}" target="_blank" rel="noreferrer">${p.title}</a></h3>
+            <p class="summary">${p.summary}</p>
+            <div class="tags">${p.modality.map(t => `<span class="tag modality">${t}</span>`).join('')}${p.tags.slice(0,7).map(t => `<span class="tag">${t}</span>`).join('')}</div>
+            <div class="abstract">${p.abstract}<br><br><strong>Datasets:</strong> ${p.datasets.join(', ')}<br><strong>Representation:</strong> ${p.representation}</div>
+            <div class="card-footer">
+              <div class="links">${cardLinks(p)}<button class="toggle" type="button" data-toggle="${p.id}">Show abstract</button></div>
+              <span class="eval ${evalClass(p.local_eval)}">Local Eval: ${p.local_eval}</span>
+            </div>
+          </div>
+        </article>`).join('') : '<div class="empty">No papers match the current filters.</div>';
+    }
+
+    function renderDatasets() {
+      $('#datasetsGrid').innerHTML = datasets.map(d => `
+        <article class="dataset-card">
+          <h3><a href="${d.url}" target="_blank" rel="noreferrer">${d.name}</a></h3>
+          <p><strong>${d.type}</strong></p>
+          <p><strong>Sensors:</strong> ${d.sensors}</p>
+          <p><strong>Ground truth:</strong> ${d.gt}</p>
+          <p>${d.notes}</p>
+        </article>`).join('');
+    }
+
+    function fillFilters() {
+      unique(papers.map(p => [String(p.year)])).sort(byYearDesc).forEach(year => $('#yearFilter').insertAdjacentHTML('beforeend', `<option value="${year}">${year}</option>`));
+      unique(papers.map(p => p.modality)).forEach(m => $('#modalityFilter').insertAdjacentHTML('beforeend', `<option value="${m}">${m}</option>`));
+      $('#tagChips').innerHTML = unique(papers.map(p => p.tags)).map(tag => `<button class="chip" type="button" data-tag="${tag}">${tag}</button>`).join('');
+    }
+
+    function updateControls() {
+      $('#query').value = state.query;
+      $('#yearFilter').value = state.year;
+      $('#modalityFilter').value = state.modality;
+      document.querySelectorAll('.chip').forEach(chip => chip.classList.toggle('active', chip.dataset.tag === state.tag));
+    }
+
+    function syncFromHash() {
+      const params = new URLSearchParams(location.hash.replace(/^#/, ''));
+      state.query = params.get('q') || '';
+      state.year = params.get('year') || '';
+      state.modality = params.get('modality') || '';
+      state.tag = params.get('tag') || '';
+      updateControls();
+      renderPapers();
+    }
+
+    function syncHash() {
+      const params = new URLSearchParams();
+      if (state.query) params.set('q', state.query);
+      if (state.year) params.set('year', state.year);
+      if (state.modality) params.set('modality', state.modality);
+      if (state.tag) params.set('tag', state.tag);
+      history.replaceState(null, '', params.toString() ? `#${params.toString()}` : location.pathname);
+    }
+
+    function initEvents() {
+      $('#query').addEventListener('input', e => { state.query = e.target.value; syncHash(); renderPapers(); });
+      $('#yearFilter').addEventListener('change', e => { state.year = e.target.value; syncHash(); renderPapers(); });
+      $('#modalityFilter').addEventListener('change', e => { state.modality = e.target.value; syncHash(); renderPapers(); });
+      $('#clearFilters').addEventListener('click', () => { state.query = state.year = state.modality = state.tag = ''; updateControls(); syncHash(); renderPapers(); });
+      $('#tagChips').addEventListener('click', e => {
+        const btn = e.target.closest('[data-tag]');
+        if (!btn) return;
+        state.tag = state.tag === btn.dataset.tag ? '' : btn.dataset.tag;
+        updateControls(); syncHash(); renderPapers();
+      });
+      $('#papersGrid').addEventListener('click', e => {
+        const btn = e.target.closest('[data-toggle]');
+        if (!btn) return;
+        const card = document.querySelector(`.paper-card[data-id="${btn.dataset.toggle}"]`);
+        card.classList.toggle('open');
+        btn.textContent = card.classList.contains('open') ? 'Hide abstract' : 'Show abstract';
+      });
+      $('#copyPageLink').addEventListener('click', async () => {
+        try { await navigator.clipboard.writeText(location.href); showToast('Page link copied'); }
+        catch { showToast('Copy failed'); }
+      });
+    }
+
+    function initStats() {
+      $('#paperCount').textContent = papers.length;
+      $('#datasetCount').textContent = datasets.length;
+      $('#yearCount').textContent = unique(papers.map(p => [String(p.year)])).length;
+      $('#codeCount').textContent = papers.filter(p => p.code).length;
+    }
+
+    fillFilters();
+    initStats();
+    renderDatasets();
+    initEvents();
+    syncFromHash();
   </script>
 </body>
 </html>

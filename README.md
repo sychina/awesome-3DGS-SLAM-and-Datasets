@@ -8,6 +8,8 @@
 [![Maintained](https://img.shields.io/badge/maintained-yes-blue.svg)](#maintenance-policy)
 [![Topic](https://img.shields.io/badge/topic-3DGS--SLAM-orange.svg)](#scope)
 
+[![Open Website](https://img.shields.io/badge/Open-Website-7c3aed?style=for-the-badge&logo=githubpages&logoColor=white)](https://sychina.github.io/awesome-3DGS-SLAM-and-Datasets/) 
+
 ## Scope
 
 This repository tracks papers and datasets related to 3DGS-SLAM, including:
@@ -87,6 +89,40 @@ Non-goals: pure offline novel-view synthesis papers are included only when they 
 | [EuRoC MAV](https://projects.asl.ethz.ch/datasets/euroc-mav/) | Visual-inertial MAV | Stereo images, synchronized IMU | Accurate motion and structure ground truth | VIO / stereo / loop-closure variants | Track scale, IMU usage, and sequence difficulty. |
 | [KITTI Odometry](https://www.cvlibs.net/datasets/kitti/eval_odometry.php) | Outdoor driving | Stereo, LiDAR-compatible benchmark protocols | GT for training sequences 00-10 | Large-scale visual/LiDAR SLAM | Use for outdoor scalability, trajectory drift, map memory. |
 
+## Maintenance policy
+
+### Sorting rules
+
+1. Sort by **year descending**.
+2. Within the same year, sort by **venue rank / publication status**: journal / main conference / workshop / arXiv.
+3. Within the same venue, sort by **paper title A-Z**.
+4. Keep survey and benchmark papers in separate sections even if they are highly cited.
+
+### Required fields for every paper
+
+| Field | Required | Description |
+|---|---:|---|
+| `id` | yes | Stable slug, e.g. `gs_slam_2024` |
+| `year` | yes | Publication year |
+| `venue` | yes | CVPR, ICCV, IROS, arXiv, etc. |
+| `title` | yes | Paper title |
+| `paper` | yes | arXiv / DOI / project / CVF link |
+| `code` | optional | Official repository if available |
+| `modality` | yes | RGB-D, monocular, stereo, LiDAR, event, VIO |
+| `representation` | yes | 3DGS, 2DGS, Gaussian surfels, hybrid mesh+GS, etc. |
+| `datasets` | yes | Evaluation datasets |
+| `metrics` | recommended | ATE, PSNR, SSIM, LPIPS, depth L1, FPS, memory |
+| `summary` | yes | 1-2 sentence contribution summary |
+| `tags` | recommended | `loop-closure`, `dynamic`, `semantic`, `large-scale`, etc. |
+| `local_eval` | public-safe | `not tested`, `tested locally`, `reproduce pending` |
+
+### Status labels
+
+- `paper-only`: no public code found.
+- `code-released`: official implementation released.
+- `reproduce-pending`: code exists but local reproduction not done.
+- `tested-locally`: tested privately; raw numbers are not public.
+- `archived`: outdated or superseded, kept for history.
 
 ## Contributing
 
