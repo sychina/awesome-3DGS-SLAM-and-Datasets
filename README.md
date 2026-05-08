@@ -124,6 +124,30 @@ Non-goals: pure offline novel-view synthesis papers are included only when they 
 - `tested-locally`: tested privately; raw numbers are not public.
 - `archived`: outdated or superseded, kept for history.
 
+### Paper cover thumbnails
+
+The website supports paper-cover thumbnails in each paper card. Put low-resolution paper first-page screenshots, teaser figures, or official thumbnails under:
+
+```text
+docs/assets/thumbnails/
+```
+
+Recommended naming convention:
+
+```text
+docs/assets/thumbnails/<paper_id>.jpg
+docs/assets/thumbnails/<paper_id>.png
+docs/assets/thumbnails/<paper_id>.svg
+```
+
+Then add a public-safe field in the paper metadata or generated HTML data:
+
+```yaml
+thumbnail: docs/assets/thumbnails/splatam_2024.jpg
+```
+
+Use small images, ideally under 400 KB each, so GitHub Pages loads quickly. Do not put private experiment plots or unreleased results into thumbnails.
+
 ## Contributing
 
 Please open a PR with changes to `data/papers.yml` or `data/datasets.yml`. A good paper entry includes:

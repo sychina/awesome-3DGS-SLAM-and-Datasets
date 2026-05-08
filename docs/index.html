@@ -104,14 +104,19 @@
     .section-title p { margin: 6px 0 0; color: var(--muted); line-height: 1.6; }
     .count { color: var(--muted); white-space: nowrap; }
     .papers-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
-    .paper-card { overflow: hidden; display: grid; grid-template-columns: 142px minmax(0,1fr); min-height: 236px; transition: transform .18s ease, border-color .18s ease, background .18s ease; }
+    .paper-card { overflow: hidden; display: grid; grid-template-columns: 226px minmax(0,1fr); min-height: 286px; transition: transform .18s ease, border-color .18s ease, background .18s ease; }
     .paper-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,.28); background: linear-gradient(180deg, rgba(255,255,255,.13), rgba(255,255,255,.08)); }
-    .thumb { position: relative; min-height: 100%; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; border-right: 1px solid var(--line); }
-    .thumb:before { content: ""; position: absolute; inset: 0; background: var(--thumb-bg); opacity: .96; }
-    .thumb:after { content: ""; position: absolute; inset: 0; background-image: radial-gradient(circle at 25% 28%, rgba(255,255,255,.55) 0 2px, transparent 3px), radial-gradient(circle at 72% 62%, rgba(255,255,255,.35) 0 3px, transparent 4px), linear-gradient(135deg, transparent 0 42%, rgba(255,255,255,.22) 43% 44%, transparent 45%); opacity: .7; }
-    .thumb > * { position: relative; z-index: 1; }
-    .year-badge { align-self: flex-start; border: 1px solid rgba(255,255,255,.38); background: rgba(0,0,0,.18); border-radius: 999px; padding: 7px 10px; font-weight: 800; }
-    .thumb-title { font-weight: 900; font-size: 32px; letter-spacing: -.08em; color: white; text-shadow: 0 8px 28px rgba(0,0,0,.35); }
+    .cover { position: relative; min-height: 100%; overflow: hidden; border-right: 1px solid var(--line); background: var(--thumb-bg); }
+    .cover img { position: relative; z-index: 1; width: 100%; height: 100%; min-height: 286px; display: block; object-fit: cover; object-position: center top; filter: saturate(1.05) contrast(1.02); transition: transform .24s ease, filter .24s ease; }
+    .paper-card:hover .cover img { transform: scale(1.035); filter: saturate(1.12) contrast(1.06); }
+    .cover:after { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(180deg, rgba(2,6,23,.10), rgba(2,6,23,.18) 42%, rgba(2,6,23,.78)); }
+    .cover-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 22px; text-align: center; color: white; background: var(--thumb-bg); }
+    .cover img + .cover-placeholder { display: none; }
+    .cover.missing-cover .cover-placeholder { display: flex; }
+    .placeholder-mark { font-weight: 900; font-size: 36px; letter-spacing: -.08em; text-shadow: 0 8px 28px rgba(0,0,0,.35); }
+    .placeholder-sub { color: rgba(255,255,255,.82); line-height: 1.35; font-size: 13px; }
+    .year-badge { position: absolute; z-index: 3; top: 14px; left: 14px; border: 1px solid rgba(255,255,255,.48); background: rgba(2,6,23,.38); backdrop-filter: blur(10px); border-radius: 999px; padding: 7px 10px; font-weight: 800; }
+    .cover-caption { position: absolute; z-index: 3; left: 14px; right: 14px; bottom: 14px; color: rgba(255,255,255,.92); font-size: 12px; line-height: 1.4; font-weight: 720; text-shadow: 0 8px 26px rgba(0,0,0,.5); }
     .paper-body { padding: 18px; display: flex; flex-direction: column; gap: 11px; }
     .meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; color: var(--muted); font-size: 13px; }
     .venue { color: #bae6fd; }
@@ -139,7 +144,7 @@
     .toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%) translateY(18px); opacity: 0; pointer-events: none; background: rgba(15,23,42,.94); border: 1px solid var(--line); color: white; border-radius: 999px; padding: 12px 16px; box-shadow: var(--shadow); transition: .2s ease; z-index: 50; }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
     @media (max-width: 1040px) { .hero-grid { grid-template-columns: 1fr; } .papers-grid { grid-template-columns: 1fr; } .datasets-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
-    @media (max-width: 760px) { .site-shell { width: min(100% - 22px, var(--max)); } .nav { align-items: flex-start; flex-direction: column; } .control-grid { grid-template-columns: 1fr; } .paper-card { grid-template-columns: 1fr; } .thumb { min-height: 145px; border-right: 0; border-bottom: 1px solid var(--line); } .datasets-grid { grid-template-columns: 1fr; } .filters { position: relative; } }
+    @media (max-width: 760px) { .site-shell { width: min(100% - 22px, var(--max)); } .nav { align-items: flex-start; flex-direction: column; } .control-grid { grid-template-columns: 1fr; } .paper-card { grid-template-columns: 1fr; } .cover { min-height: 260px; border-right: 0; border-bottom: 1px solid var(--line); } .cover img { height: 260px; min-height: 260px; } .datasets-grid { grid-template-columns: 1fr; } .filters { position: relative; } }
   </style>
 </head>
 <body>
@@ -203,7 +208,7 @@
       <div class="section-title">
         <div>
           <h2>Papers</h2>
-          <p>Card-style browsing inspired by public awesome-list pages: search, filter by year/modality/tag, open links, and expand abstracts.</p>
+          <p>Card-style browsing inspired by public awesome-list pages: paper-cover thumbnails, search, year/modality/tag filters, links, and expandable abstracts.</p>
         </div>
         <div class="count" id="visibleCount">0 papers shown</div>
       </div>
@@ -227,6 +232,7 @@
     const papers = [
       {
         id: 'gs_slam_2024', year: 2024, venue: 'CVPR Highlight',
+        thumbnail: 'assets/thumbnails/gs_slam_2024.svg',
         title: 'GS-SLAM: Dense Visual SLAM with 3D Gaussian Splatting',
         authors: 'Yan Chi, et al.',
         paper: 'https://gs-slam.github.io/',
@@ -241,6 +247,7 @@
       },
       {
         id: 'splatam_2024', year: 2024, venue: 'CVPR',
+        thumbnail: 'assets/thumbnails/splatam_2024.svg',
         title: 'SplaTAM: Splat, Track & Map 3D Gaussians for Dense RGB-D SLAM',
         authors: 'Nikhil Keetha, et al.',
         paper: 'https://spla-tam.github.io/',
@@ -255,6 +262,7 @@
       },
       {
         id: 'monogs_2024', year: 2024, venue: 'CVPR Highlight',
+        thumbnail: 'assets/thumbnails/monogs_2024.svg',
         title: 'Gaussian Splatting SLAM / MonoGS',
         authors: 'Hidenobu Matsuki, Riku Murai, et al.',
         paper: 'https://rmurai.co.uk/projects/GaussianSplattingSLAM/',
@@ -269,6 +277,7 @@
       },
       {
         id: 'splat_slam_2024', year: 2024, venue: 'arXiv / CVPRW 2025',
+        thumbnail: 'assets/thumbnails/splat_slam_2024.svg',
         title: 'Splat-SLAM: Globally Optimized RGB-only SLAM with 3D Gaussians',
         authors: 'Erik Sandstrom, et al.',
         paper: 'https://arxiv.org/abs/2405.16544',
@@ -283,6 +292,7 @@
       },
       {
         id: 'gaus_slam_2025', year: 2025, venue: 'arXiv',
+        thumbnail: 'assets/thumbnails/gaus_slam_2025.svg',
         title: 'GauS-SLAM: Dense RGB-D SLAM with Gaussian Surfels',
         authors: 'GauS-SLAM authors',
         paper: 'https://github.com/gaus-slam/gaus-slam',
@@ -297,6 +307,7 @@
       },
       {
         id: '2dgs_slam_2025', year: 2025, venue: 'arXiv',
+        thumbnail: 'assets/thumbnails/2dgs_slam_2025.svg',
         title: '2DGS-SLAM: Globally Consistent RGB-D SLAM with 2D Gaussian Splatting',
         authors: 'PRBonn, et al.',
         paper: 'https://arxiv.org/html/2506.00970v1',
@@ -372,9 +383,14 @@
       $('#visibleCount').textContent = `${list.length} of ${papers.length} papers shown`;
       $('#papersGrid').innerHTML = list.length ? list.map((p, idx) => `
         <article class="paper-card" data-id="${p.id}" style="--thumb-bg:${gradients[idx % gradients.length]}">
-          <div class="thumb" aria-hidden="true">
+          <div class="cover">
+            ${p.thumbnail ? `<img src="${p.thumbnail}" alt="Paper cover thumbnail for ${p.title}" loading="lazy" onerror="this.closest('.cover').classList.add('missing-cover'); this.remove();">` : ''}
+            <div class="cover-placeholder" aria-hidden="true">
+              <span class="placeholder-mark">${p.representation.includes('2D') ? '2D' : '3D'}GS</span>
+              <span class="placeholder-sub">Add a paper cover image in<br>docs/assets/thumbnails/</span>
+            </div>
             <span class="year-badge">${p.year}</span>
-            <span class="thumb-title">${p.representation.includes('2D') ? '2D' : '3D'}GS</span>
+            <span class="cover-caption">${p.modality.join(' / ')} · ${p.representation}</span>
           </div>
           <div class="paper-body">
             <div class="meta"><span class="venue">${p.venue}</span><span>•</span><span>${p.authors}</span></div>
