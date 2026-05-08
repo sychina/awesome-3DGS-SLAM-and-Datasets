@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Awesome 3DGS-SLAM & Datasets</title>
+  <style>
+    :root { --bg:#f7f8fb; --card:#ffffff; --text:#172033; --muted:#667085; --line:#e5e7eb; --accent:#365df0; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", Arial, sans-serif; background:var(--bg); color:var(--text); }
+    header { padding:48px 24px 28px; background:linear-gradient(135deg,#101828,#243b8f); color:white; }
+    header h1 { margin:0 0 12px; font-size:clamp(28px,5vw,48px); }
+    header p { max-width:980px; margin:0; color:#dbe4ff; line-height:1.7; }
+    main { max-width:1180px; margin:0 auto; padding:28px 20px 56px; }
+    .panel { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:18px; box-shadow:0 8px 24px rgba(16,24,40,.06); margin-bottom:20px; }
+    .controls { display:grid; grid-template-columns: 1.4fr repeat(3, minmax(140px, .6fr)); gap:12px; align-items:center; }
+    input, select { width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:12px; font-size:14px; background:white; }
+    table { width:100%; border-collapse:separate; border-spacing:0; overflow:hidden; border-radius:14px; border:1px solid var(--line); background:white; }
+    th, td { padding:12px 12px; border-bottom:1px solid var(--line); vertical-align:top; font-size:14px; }
+    th { text-align:left; background:#f2f4f7; font-weight:700; color:#344054; position:sticky; top:0; }
+    tr:last-child td { border-bottom:0; }
+    a { color:var(--accent); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    .tag { display:inline-block; border:1px solid #c7d7fe; color:#2f55d4; background:#eef4ff; border-radius:999px; padding:2px 8px; margin:2px 4px 2px 0; font-size:12px; }
+    .muted { color:var(--muted); }
+    .grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap:16px; }
+    .dataset-card h3 { margin:0 0 8px; }
+    .dataset-card p { margin:6px 0; line-height:1.55; }
+    .notice { border-left:4px solid var(--accent); padding:12px 14px; background:#eef4ff; border-radius:12px; color:#1d2939; }
+    @media (max-width: 800px) { .controls { grid-template-columns:1fr; } table { display:block; overflow-x:auto; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Awesome 3DGS-SLAM & Datasets</h1>
+    <p>用于维护 3D Gaussian Splatting SLAM 文献、数据集、代码与复现实验状态的公开页面。私有测试结果不应进入此 HTML；本页面只展示 public-safe 字段。</p>
+  </header>
+  <main>
+    <section class="panel">
+      <div class="notice"><strong>Private results policy:</strong> raw local benchmark numbers should stay in <code>private/results.local.csv</code> and be excluded by <code>.gitignore</code>. Public pages only show a coarse local status.</div>
+    </section>
+
+    <section class="panel">
+      <div class="controls">
+        <input id="q" placeholder="Search title, summary, dataset, tag..." />
+        <select id="modality"><option value="">All modalities</option></select>
+        <select id="year"><option value="">All years</option></select>
+        <select id="tag"><option value="">All tags</option></select>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Papers</h2>
+      <table id="papers">
+        <thead><tr><th>Year</th><th>Venue</th><th>Paper</th><th>Modality</th><th>Representation</th><th>Datasets</th><th>Tags</th><th>Summary</th><th>Local Eval</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <h2>Datasets</h2>
+      <div id="datasets" class="grid"></div>
+    </section>
+  </main>
+  <script>
+    const papers = [
+      {id:'gs_slam_2024',year:2024,venue:'CVPR Highlight',title:'GS-SLAM: Dense Visual SLAM with 3D Gaussian Splatting',paper:'https://gs-slam.github.io/',code:'https://github.com/yanchi-3dv/diff-gaussian-rasterization-for-gsslam',modality:['RGB-D'],representation:'3DGS',datasets:['Replica','TUM RGB-D'],tags:['dense-slam','coarse-to-fine-tracking','adaptive-expansion'],summary:'Differentiable splatting pipeline with adaptive Gaussian expansion/pruning and coarse-to-fine camera tracking for real-time dense RGB-D SLAM.',local_eval:'reproduce pending'},
+      {id:'splatam_2024',year:2024,venue:'CVPR',title:'SplaTAM: Splat, Track & Map 3D Gaussians for Dense RGB-D SLAM',paper:'https://spla-tam.github.io/',code:'https://github.com/spla-tam/SplaTAM',modality:['RGB-D'],representation:'3DGS',datasets:['Replica','TUM RGB-D','ScanNet'],tags:['dense-slam','online-mapping','silhouette-mask'],summary:'Online dense RGB-D SLAM using explicit 3D Gaussians and silhouette-aware map expansion.',local_eval:'reproduce pending'},
+      {id:'monogs_2024',year:2024,venue:'CVPR Highlight',title:'Gaussian Splatting SLAM / MonoGS',paper:'https://rmurai.co.uk/projects/GaussianSplattingSLAM/',code:'https://github.com/muskie82/MonoGS',modality:['Monocular','Stereo','RGB-D'],representation:'3DGS',datasets:['TUM RGB-D','Replica'],tags:['monocular','multi-sensor','real-time'],summary:'Monocular-first 3DGS SLAM system, with repository support for stereo and RGB-D inputs.',local_eval:'reproduce pending'},
+      {id:'splat_slam_2024',year:2024,venue:'arXiv / CVPRW 2025',title:'Splat-SLAM: Globally Optimized RGB-only SLAM with 3D Gaussians',paper:'https://arxiv.org/abs/2405.16544',code:'https://github.com/eriksandstroem/Splat-SLAM',modality:['RGB-only'],representation:'3DGS',datasets:['Replica','TUM RGB-D','ScanNet'],tags:['rgb-only','global-optimization','loop-closure'],summary:'RGB-only dense SLAM using globally optimized tracking and dynamic updates to a dense Gaussian map.',local_eval:'not tested'},
+      {id:'gaus_slam_2025',year:2025,venue:'arXiv',title:'GauS-SLAM: Dense RGB-D SLAM with Gaussian Surfels',paper:'https://github.com/gaus-slam/gaus-slam',code:'https://github.com/gaus-slam/gaus-slam',modality:['RGB-D'],representation:'Gaussian surfels',datasets:['Replica','TUM RGB-D','ScanNet','ScanNet++'],tags:['surfel','dense-slam','scannet++'],summary:'Dense RGB-D SLAM using surface-oriented Gaussian surfels for localization and high-fidelity reconstruction.',local_eval:'not tested'}
+    ];
+    const datasets = [
+      {name:'Replica',type:'Synthetic / reconstructed indoor',url:'https://github.com/facebookresearch/Replica-Dataset',sensors:'mesh, rendered RGB-D, semantic labels',gt:'dense geometry and semantic annotations',notes:'Controlled indoor benchmark often used for rendering and reconstruction quality.'},
+      {name:'TUM RGB-D',type:'Real indoor RGB-D',url:'https://cvg.cit.tum.de/data/datasets/rgbd-dataset',sensors:'RGB, depth, accelerometer',gt:'motion-capture camera trajectory',notes:'Classic RGB-D SLAM benchmark; always report sequence name and alignment protocol.'},
+      {name:'ScanNet',type:'Real indoor RGB-D video',url:'https://www.scan-net.org/',sensors:'RGB-D video, poses, reconstructions, semantics',gt:'poses, 3D reconstructions, semantic and instance labels',notes:'Access approval may be required; use official splits when possible.'},
+      {name:'ScanNet++',type:'High-fidelity real indoor',url:'https://scannetpp.mlsg.cit.tum.de/scannetpp/',sensors:'laser scans, DSLR images, iPhone RGB-D',gt:'high-quality geometry and semantic annotations',notes:'Useful for high-fidelity reconstruction and NVS-oriented SLAM evaluation.'},
+      {name:'EuRoC MAV',type:'Visual-inertial MAV',url:'https://projects.asl.ethz.ch/datasets/euroc-mav/',sensors:'stereo cameras, IMU',gt:'accurate motion and structure ground truth',notes:'Useful for stereo/VIO variants of Gaussian-map SLAM.'},
+      {name:'KITTI Odometry',type:'Outdoor driving',url:'https://www.cvlibs.net/datasets/kitti/eval_odometry.php',sensors:'stereo, LiDAR-compatible benchmark',gt:'GT trajectories for training sequences 00-10',notes:'Useful for large-scale outdoor and LiDAR/vision SLAM.'}
+    ];
+    const $ = s => document.querySelector(s);
+    const uniq = arr => [...new Set(arr.flat())].sort();
+    function fillFilters(){
+      uniq(papers.map(p=>p.modality)).forEach(v=>$('#modality').insertAdjacentHTML('beforeend',`<option>${v}</option>`));
+      uniq(papers.map(p=>[String(p.year)])).forEach(v=>$('#year').insertAdjacentHTML('beforeend',`<option>${v}</option>`));
+      uniq(papers.map(p=>p.tags)).forEach(v=>$('#tag').insertAdjacentHTML('beforeend',`<option>${v}</option>`));
+    }
+    function renderPapers(){
+      const q = $('#q').value.toLowerCase();
+      const modality = $('#modality').value;
+      const year = $('#year').value;
+      const tag = $('#tag').value;
+      const rows = papers
+        .filter(p => !q || JSON.stringify(p).toLowerCase().includes(q))
+        .filter(p => !modality || p.modality.includes(modality))
+        .filter(p => !year || String(p.year) === year)
+        .filter(p => !tag || p.tags.includes(tag))
+        .sort((a,b)=> b.year - a.year || a.title.localeCompare(b.title))
+        .map(p => `<tr><td>${p.year}</td><td>${p.venue}</td><td><a href="${p.paper}">${p.title}</a><br><span class="muted"><a href="${p.code}">code</a> · ${p.id}</span></td><td>${p.modality.join(', ')}</td><td>${p.representation}</td><td>${p.datasets.join(', ')}</td><td>${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</td><td>${p.summary}</td><td>${p.local_eval}</td></tr>`).join('');
+      $('#papers tbody').innerHTML = rows || '<tr><td colspan="9">No matches.</td></tr>';
+    }
+    function renderDatasets(){
+      $('#datasets').innerHTML = datasets.map(d => `<article class="panel dataset-card"><h3><a href="${d.url}">${d.name}</a></h3><p class="muted">${d.type}</p><p><strong>Sensors:</strong> ${d.sensors}</p><p><strong>Ground truth:</strong> ${d.gt}</p><p>${d.notes}</p></article>`).join('');
+    }
+    ['q','modality','year','tag'].forEach(id => document.addEventListener('input', e => { if(e.target.id === id) renderPapers(); }));
+    fillFilters(); renderPapers(); renderDatasets();
+  </script>
+</body>
+</html>

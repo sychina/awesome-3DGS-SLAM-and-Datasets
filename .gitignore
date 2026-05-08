@@ -1,0 +1,17 @@
+# Private benchmark results
+private/
+*.local.csv
+*.local.json
+*.local.md
+docs/index.local.html
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/

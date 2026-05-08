@@ -1,0 +1,53 @@
+- id: replica
+  name: Replica
+  type: Synthetic / reconstructed indoor
+  url: "https://github.com/facebookresearch/Replica-Dataset"
+  sensors: ["mesh", "rendered RGB-D", "semantic labels"]
+  ground_truth: "dense geometry and semantic annotations"
+  typical_metrics: ["PSNR", "SSIM", "LPIPS", "Depth L1", "geometry"]
+  notes: "Controlled indoor benchmark often used for rendering and reconstruction quality."
+
+- id: tum_rgbd
+  name: TUM RGB-D
+  type: Real indoor RGB-D
+  url: "https://cvg.cit.tum.de/data/datasets/rgbd-dataset"
+  sensors: ["RGB", "depth", "accelerometer"]
+  ground_truth: "motion-capture camera trajectory"
+  typical_metrics: ["ATE", "RPE", "tracking success"]
+  notes: "Classic RGB-D SLAM benchmark; always report sequence name and alignment protocol."
+
+- id: scannet
+  name: ScanNet
+  type: Real indoor RGB-D video
+  url: "https://www.scan-net.org/"
+  sensors: ["RGB-D video", "poses", "surface reconstruction", "semantic labels"]
+  ground_truth: "poses, 3D reconstructions, semantic and instance labels"
+  typical_metrics: ["ATE", "PSNR", "SSIM", "LPIPS", "semantic mIoU"]
+  notes: "Access approval may be required; use official splits when possible."
+
+- id: scannetpp
+  name: ScanNet++
+  type: High-fidelity real indoor
+  url: "https://scannetpp.mlsg.cit.tum.de/scannetpp/"
+  sensors: ["laser scans", "DSLR images", "iPhone RGB-D"]
+  ground_truth: "high-quality geometry and semantic annotations"
+  typical_metrics: ["NVS", "geometry", "semantic"]
+  notes: "Useful for high-fidelity reconstruction and NVS-oriented SLAM evaluation."
+
+- id: euroc_mav
+  name: EuRoC MAV
+  type: Visual-inertial MAV
+  url: "https://projects.asl.ethz.ch/datasets/euroc-mav/"
+  sensors: ["stereo cameras", "IMU"]
+  ground_truth: "accurate motion and structure ground truth"
+  typical_metrics: ["ATE", "RPE", "scale drift"]
+  notes: "Useful for stereo/VIO variants of Gaussian-map SLAM."
+
+- id: kitti_odometry
+  name: KITTI Odometry
+  type: Outdoor driving
+  url: "https://www.cvlibs.net/datasets/kitti/eval_odometry.php"
+  sensors: ["stereo", "LiDAR-compatible benchmark"]
+  ground_truth: "GT trajectories for training sequences 00-10"
+  typical_metrics: ["trajectory drift", "ATE", "RPE", "runtime", "map size"]
+  notes: "Useful for large-scale outdoor and LiDAR/vision SLAM."

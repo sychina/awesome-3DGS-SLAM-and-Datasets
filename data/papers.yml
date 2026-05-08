@@ -1,0 +1,69 @@
+- id: gs_slam_2024
+  year: 2024
+  venue: CVPR Highlight
+  title: "GS-SLAM: Dense Visual SLAM with 3D Gaussian Splatting"
+  paper: "https://gs-slam.github.io/"
+  code: "https://github.com/yanchi-3dv/diff-gaussian-rasterization-for-gsslam"
+  modality: ["RGB-D"]
+  representation: "3D Gaussian Splatting"
+  datasets: ["Replica", "TUM RGB-D"]
+  metrics: ["ATE", "PSNR", "SSIM", "LPIPS", "FPS"]
+  tags: ["dense-slam", "coarse-to-fine-tracking", "adaptive-expansion"]
+  summary: "Differentiable splatting pipeline with adaptive Gaussian expansion/pruning and coarse-to-fine camera tracking for real-time dense RGB-D SLAM."
+  local_eval: "reproduce pending"
+
+- id: splatam_2024
+  year: 2024
+  venue: CVPR
+  title: "SplaTAM: Splat, Track & Map 3D Gaussians for Dense RGB-D SLAM"
+  paper: "https://spla-tam.github.io/"
+  code: "https://github.com/spla-tam/SplaTAM"
+  modality: ["RGB-D"]
+  representation: "3D Gaussian Splatting"
+  datasets: ["Replica", "TUM RGB-D", "ScanNet"]
+  metrics: ["ATE", "PSNR", "SSIM", "LPIPS", "Depth L1"]
+  tags: ["dense-slam", "online-mapping", "silhouette-mask"]
+  summary: "Online dense RGB-D SLAM using explicit 3D Gaussians and silhouette-aware map expansion."
+  local_eval: "reproduce pending"
+
+- id: monogs_2024
+  year: 2024
+  venue: CVPR Highlight
+  title: "Gaussian Splatting SLAM / MonoGS"
+  paper: "https://rmurai.co.uk/projects/GaussianSplattingSLAM/"
+  code: "https://github.com/muskie82/MonoGS"
+  modality: ["Monocular", "Stereo", "RGB-D"]
+  representation: "3D Gaussian Splatting"
+  datasets: ["TUM RGB-D", "Replica"]
+  metrics: ["ATE", "rendering", "FPS"]
+  tags: ["monocular", "multi-sensor", "real-time"]
+  summary: "Monocular-first 3DGS SLAM system, with repository support for stereo and RGB-D inputs."
+  local_eval: "reproduce pending"
+
+- id: splat_slam_2024
+  year: 2024
+  venue: arXiv / CVPRW 2025
+  title: "Splat-SLAM: Globally Optimized RGB-only SLAM with 3D Gaussians"
+  paper: "https://arxiv.org/abs/2405.16544"
+  code: "https://github.com/eriksandstroem/Splat-SLAM"
+  modality: ["RGB-only"]
+  representation: "3D Gaussian Splatting"
+  datasets: ["Replica", "TUM RGB-D", "ScanNet"]
+  metrics: ["ATE", "mapping", "rendering", "runtime"]
+  tags: ["rgb-only", "global-optimization", "loop-closure"]
+  summary: "RGB-only dense SLAM using globally optimized tracking and dynamic updates to a dense Gaussian map."
+  local_eval: "not tested"
+
+- id: gaus_slam_2025
+  year: 2025
+  venue: arXiv
+  title: "GauS-SLAM: Dense RGB-D SLAM with Gaussian Surfels"
+  paper: "https://github.com/gaus-slam/gaus-slam"
+  code: "https://github.com/gaus-slam/gaus-slam"
+  modality: ["RGB-D"]
+  representation: "Gaussian surfels"
+  datasets: ["Replica", "TUM RGB-D", "ScanNet", "ScanNet++"]
+  metrics: ["ATE", "rendering", "reconstruction"]
+  tags: ["surfel", "dense-slam", "scannet++"]
+  summary: "Dense RGB-D SLAM using surface-oriented Gaussian surfels for localization and high-fidelity reconstruction."
+  local_eval: "not tested"
