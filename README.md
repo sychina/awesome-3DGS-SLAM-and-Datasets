@@ -19,85 +19,6 @@ This repository tracks papers and datasets related to 3DGS-SLAM, including:
 
 Non-goals: pure offline novel-view synthesis papers are included only when they strongly affect SLAM initialization, tracking, or map optimization.
 
-## Repository design
-
-The README is generated from structured files, so the list can grow without becoming unmaintainable.
-
-```text
-.
-├── README.md                       # public generated/readable list
-├── data/
-│   ├── papers.yml                  # public paper metadata
-│   └── datasets.yml                # public dataset metadata
-├── docs/
-│   └── index.html                  # public static HTML page for GitHub Pages
-├── scripts/
-│   ├── build_readme.py             # optional: regenerate README from data/*.yml
-│   └── build_html.py               # optional: regenerate docs/index.html
-├── private/
-│   └── results.local.example.csv   # schema example only; do not commit real results
-└── .gitignore                      # hides local/private evaluation files
-```
-
-### Public vs private data
-
-The public list contains paper metadata, dataset metadata, and qualitative summaries only. Your local test results should stay private.
-
-Recommended policy:
-
-```gitignore
-private/
-*.local.csv
-*.local.json
-*.local.md
-docs/index.local.html
-```
-
-Use `private/results.local.csv` locally for experiments. Scripts may merge it into a local-only table, but public README/HTML must not read or publish it.
-
-Example private result schema:
-
-```csv
-paper_id,dataset,sequence,modality,metric,value,unit,hardware,commit,config,notes,visibility
-mono_gs_2024,tum-rgbd,fr3_office,monocular,ATE_RMSE,0.0,cm,RTX4090,local,configs/tum/fr3_office.yaml,"private note",private
-```
-
-Public README may keep a non-sensitive column such as `Local Eval` with values like `not tested`, `tested locally`, or `reproduce pending`, but not raw numbers.
-
-## Maintenance policy
-
-### Sorting rules
-
-1. Sort by **year descending**.
-2. Within the same year, sort by **venue rank / publication status**: journal / main conference / workshop / arXiv.
-3. Within the same venue, sort by **paper title A-Z**.
-4. Keep survey and benchmark papers in separate sections even if they are highly cited.
-
-### Required fields for every paper
-
-| Field | Required | Description |
-|---|---:|---|
-| `id` | yes | Stable slug, e.g. `gs_slam_2024` |
-| `year` | yes | Publication year |
-| `venue` | yes | CVPR, ICCV, IROS, arXiv, etc. |
-| `title` | yes | Paper title |
-| `paper` | yes | arXiv / DOI / project / CVF link |
-| `code` | optional | Official repository if available |
-| `modality` | yes | RGB-D, monocular, stereo, LiDAR, event, VIO |
-| `representation` | yes | 3DGS, 2DGS, Gaussian surfels, hybrid mesh+GS, etc. |
-| `datasets` | yes | Evaluation datasets |
-| `metrics` | recommended | ATE, PSNR, SSIM, LPIPS, depth L1, FPS, memory |
-| `summary` | yes | 1-2 sentence contribution summary |
-| `tags` | recommended | `loop-closure`, `dynamic`, `semantic`, `large-scale`, etc. |
-| `local_eval` | public-safe | `not tested`, `tested locally`, `reproduce pending` |
-
-### Status labels
-
-- `paper-only`: no public code found.
-- `code-released`: official implementation released.
-- `reproduce-pending`: code exists but local reproduction not done.
-- `tested-locally`: tested privately; raw numbers are not public.
-- `archived`: outdated or superseded, kept for history.
 
 ## Taxonomy
 
@@ -166,45 +87,6 @@ Public README may keep a non-sensitive column such as `Local Eval` with values l
 | [EuRoC MAV](https://projects.asl.ethz.ch/datasets/euroc-mav/) | Visual-inertial MAV | Stereo images, synchronized IMU | Accurate motion and structure ground truth | VIO / stereo / loop-closure variants | Track scale, IMU usage, and sequence difficulty. |
 | [KITTI Odometry](https://www.cvlibs.net/datasets/kitti/eval_odometry.php) | Outdoor driving | Stereo, LiDAR-compatible benchmark protocols | GT for training sequences 00-10 | Large-scale visual/LiDAR SLAM | Use for outdoor scalability, trajectory drift, map memory. |
 
-## Evaluation checklist
-
-### Tracking metrics
-
-- ATE RMSE / mean / median, with unit and trajectory alignment protocol.
-- RPE translation / rotation if available.
-- Success rate / tracking lost frames.
-
-### Mapping and rendering metrics
-
-- PSNR, SSIM, LPIPS for novel-view or held-out frames.
-- Depth L1 / RMSE if depth is available.
-- Geometry metrics: accuracy, completion, Chamfer distance, F-score, normal consistency.
-- Semantic metrics if applicable: mIoU, open-vocabulary retrieval score, object-level accuracy.
-
-### Efficiency metrics
-
-- Tracking FPS, mapping FPS, end-to-end FPS.
-- GPU model, VRAM peak, CPU, RAM.
-- Number of Gaussians / surfels, map size on disk, runtime per sequence.
-- Resolution and frame skip protocol.
-
-## Reproducibility template
-
-Use this template in PRs or local experiment notes:
-
-```md
-### Reproduction note: <paper_id> on <dataset>/<sequence>
-
-- Date:
-- Commit:
-- Environment: CUDA / PyTorch / GPU / driver
-- Input modality:
-- Config:
-- Dataset preprocessing:
-- Metrics computed:
-- Result visibility: public summary only / private raw result
-- Notes:
-```
 
 ## Contributing
 
