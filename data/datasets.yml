@@ -51,3 +51,156 @@
   ground_truth: "GT trajectories for training sequences 00-10"
   typical_metrics: ["trajectory drift", "ATE", "RPE", "runtime", "map size"]
   notes: "Useful for large-scale outdoor and LiDAR/vision SLAM."
+
+- id: 7scenes
+  name: Microsoft 7-Scenes
+  type: Real indoor RGB-D
+  url: "https://www.microsoft.com/en-us/research/project/rgb-d-dataset-7-scenes/"
+  sensors: ["RGB", "depth"]
+  ground_truth: "KinectFusion generated 6-DoF camera poses"
+  typical_metrics: ["translation error", "rotation error"]
+  notes: "室内视觉定位的基础基准测试，常用于评估基于隐式场或 3DGS 的重定位精度。"
+
+- id: nclt
+  name: NCLT Dataset
+  type: Outdoor long-term multi-sensor
+  url: "https://irvlab.engin.umich.edu/resources/nclt-dataset/"
+  sensors: ["LiDAR", "omnidirectional camera", "RTK GPS", "IMU"]
+  ground_truth: "RTK GPS and optimized full 6-DoF trajectories"
+  typical_metrics: ["ATE", "long-term localization accuracy"]
+  notes: "包含丰富的长周期户外多模态数据。其原始数据集的 ROS1 bag 结构可通过脚本高效迁移至 ROS2 的 mcap 或 db3 格式进行回放与测试。"
+
+- id: cambridge_landmarks
+  name: Cambridge Landmarks
+  type: Outdoor large-scale RGB
+  url: "https://www.repository.cam.ac.uk/handle/1810/251342"
+  sensors: ["RGB images"]
+  ground_truth: "Structure from Motion (SfM) reconstructed poses"
+  typical_metrics: ["translation error", "rotation error"]
+  notes: "评估大尺度室外场景 6-DoF 绝对位姿回归与视觉定位的标准数据集。"
+
+- id: kitti_360
+  name: KITTI-360
+  type: Outdoor large-scale multi-sensor
+  url: "https://www.cvlibs.net/datasets/kitti-360/"
+  sensors: ["LiDAR", "stereo cameras", "fisheye cameras", "RTK GPS"]
+  ground_truth: "high-precision dense point clouds, 6-DoF poses, semantic annotations"
+  typical_metrics: ["NVS", "map accuracy", "semantics"]
+  notes: "提供大尺度室外多传感器融合的原始数据。其时间戳对齐与多视角约束结构，适合通过脚本离线打包为 ROS2 db3 格式，用于验证高保真数字孪生和 Sim-to-Real 的建图渲染效果。"
+
+- id: newer_college
+  name: Newer College Dataset
+  type: Outdoor long-term multi-sensor
+  url: "https://ori-drs.github.io/newer-college-dataset/"
+  sensors: ["LiDAR", "stereo cameras", "IMU"]
+  ground_truth: "ICP registered sub-centimeter point clouds, 6-DoF poses"
+  typical_metrics: ["ATE", "geometry reconstruction error"]
+  notes: "记录了长周期、存在结构退化与高动态特征的校园场景。便于通过 ROS 节点流式读取，验证跨层统计退化感知以及联合优化过程中的鲁棒性。"
+
+- id: bonn_rgbd_dynamic
+  name: Bonn RGB-D Dynamic
+  type: Real indoor dynamic RGB-D
+  url: "http://www.ipb.uni-bonn.de/data/bonn-rgbd-dynamic/"
+  sensors: ["RGB", "depth"]
+  ground_truth: "motion-capture trajectories for camera and dynamic objects"
+  typical_metrics: ["ATE", "tracking success rate in dynamic scenes"]
+  notes: "常用于评估 3DGS-SLAM 系统在包含高动态物体（如走动的人）场景下的前端跟踪鲁棒性与动态遮罩剥离准确度。"
+
+- id: tartanair
+  name: TartanAir
+  type: Synthetic multi-sensor
+  url: "https://theairlab.org/tartanair-dataset/"
+  sensors: ["stereo RGB", "depth", "optical flow", "IMU"]
+  ground_truth: "exact camera poses, dense depth, optical flow, semantic segmentation"
+  typical_metrics: ["ATE", "RPE", "visual odometry drift"]
+  notes: "提供极端环境与复杂运动模式的合成数据，传感器模态丰富。适合用于验证多模态融合 3DGS 建图与 Sim-to-Real 的算法迁移能力。"
+
+- id: virtual_kitti_2
+  name: Virtual KITTI 2
+  type: Synthetic autonomous driving
+  url: https://europe.naverlabs.com/research/computer-vision/proxy-virtual-worlds-vkitti-2/
+  sensors: Synthetic RGB, depth, optical flow, semantics, poses
+  gt: Dense synthetic annotations and camera poses
+  common_use: Dynamic/outdoor/autonomous-driving 3DGS scene understanding
+  notes: Useful with KITTI/KITTI-360 for controlled dynamic-scene evaluation.
+
+- id: waymo_open
+  name: Waymo Open Dataset
+  type: Autonomous driving / multi-sensor
+  url: https://waymo.com/open/
+  sensors: Cameras, LiDAR, labels depending task
+  gt: 3D boxes / segmentation / motion labels depending task
+  common_use: Outdoor autonomous-driving mapping, sensor rendering, and dynamic-scene evaluation
+  notes: Use official splits and document whether LiDAR labels, camera images, or motion labels are used.
+
+- id: tanks_and_temples
+  name: Tanks and Temples
+  type: Real-world reconstruction / NVS
+  url: https://www.tanksandtemples.org/
+  sensors: RGB video/images, reconstructions
+  gt: Evaluation geometry for selected scenes
+  common_use: Reconstruction and novel-view-synthesis style evaluation
+  notes: Not a standard SLAM trajectory benchmark, but useful for mapping quality.
+
+- id: nuscenes
+  name: nuScenes
+  type: Autonomous driving / multi-modal
+  url: https://www.nuscenes.org/
+  sensors: Cameras, LiDAR, radar, GPS/IMU
+  gt: 3D annotations and sensor calibration
+  common_use: Multi-modal outdoor perception, localization, and dynamic scene mapping
+  notes: Good candidate for camera-LiDAR-radar Gaussian mapping studies.
+
+- id: mulran
+  name: MulRan
+  type: Outdoor LiDAR / radar / urban driving
+  url: https://sites.google.com/view/mulran-pr/home
+  sensors: 3D LiDAR, radar, cameras, GPS/INS depending sequence
+  gt: Trajectory references depending sequence
+  common_use: Large-scale LiDAR and multi-modal SLAM
+  notes: Candidate for LiDAR-based Gaussian SLAM and localization.
+
+- id: mipnerf360
+  name: Mip-NeRF 360
+  type: Real-world 360-degree NVS benchmark
+  url: https://jonbarron.info/mipnerf360/
+  sensors: RGB image collections with camera poses
+  gt: Camera poses / benchmark images
+  common_use: Novel-view synthesis and rendering-quality baseline for 3DGS variants
+  notes: Dataset name retained for compatibility; this is a dataset entry, not a NeRF paper entry.
+
+- id: icl_nuim
+  name: ICL-NUIM
+  type: Synthetic indoor RGB-D
+  url: https://www.doc.ic.ac.uk/~ahanda/VaFRIC/iclnuim.html
+  sensors: Rendered RGB-D sequences
+  gt: Ground-truth camera trajectory and geometry
+  common_use: Legacy dense RGB-D SLAM benchmark
+  notes: Useful for controlled reconstruction tests and historical comparison.
+
+- id: eth3d
+  name: ETH3D
+  type: Multi-view reconstruction / SLAM-style scenes
+  url: https://www.eth3d.net/
+  sensors: High-resolution images and laser-scan references depending benchmark
+  gt: Camera calibration and 3D reference scans depending benchmark
+  common_use: Geometry-focused reconstruction and view-synthesis validation
+  notes: Useful for checking geometric fidelity beyond indoor RGB-D SLAM datasets.
+
+- id: dtu
+  name: DTU MVS
+  type: Multi-view stereo / reconstruction
+  url: https://roboimagedata.compute.dtu.dk/?page_id=36
+  sensors: Calibrated RGB image scans
+  gt: Camera calibration and reference geometry depending split
+  common_use: Geometry/reconstruction quality for Gaussian and 2DGS variants
+  notes: More useful for reconstruction/geometric fidelity than online SLAM tracking.
+
+- id: deep_blending
+  name: Deep Blending
+  type: Real-world NVS benchmark
+  url: http://visual.cs.ucl.ac.uk/pubs/deepblending/
+  sensors: RGB images with calibrated cameras
+  gt: Evaluation image splits
+  common_use: Rendering quality and general 3DGS baseline comparison
+  notes: Useful for non-SLAM rendering baselines and acceleration/compression comparisons.

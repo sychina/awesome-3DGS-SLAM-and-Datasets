@@ -67,3 +67,2696 @@
   tags: ["surfel", "dense-slam", "scannet++"]
   summary: "Dense RGB-D SLAM using surface-oriented Gaussian surfels for localization and high-fidelity reconstruction."
   local_eval: "not tested"
+
+- id: loc_nerf_2023
+  year: 2023
+  venue: ICRA
+  title: "Loc-NeRF: Monte Carlo Localization using Neural Radiance Fields"
+  paper: "https://arxiv.org/abs/2209.09050"
+  code: "https://github.com/MIT-SPARK/Loc-NeRF"
+  modality: ["RGB", "Odometry"]
+  representation: "NeRF"
+  datasets: ["Replica", "LLFF"]
+  metrics: ["translation error", "rotation error", "runtime"]
+  tags: ["localization", "monte-carlo", "rgb"]
+  summary: "使用预训练的神经辐射场作为地图表示，结合蒙特卡洛方法实现实时视觉定位。"
+  local_eval: "not tested"
+
+- id: pin_slam_2024
+  year: 2024
+  venue: CVPR
+  title: "PIN-SLAM: LiDAR SLAM Using a Point-Based Implicit Neural Representation for Achieving Global Map Consistency"
+  paper: "https://arxiv.org/abs/2401.11652"
+  code: "https://github.com/PRBonn/PIN_SLAM"
+  modality: ["LiDAR"]
+  representation: "Point-based Implicit Neural"
+  datasets: ["KITTI Odometry", "NCLT", "MulRan"]
+  metrics: ["ATE", "map consistency", "runtime"]
+  tags: ["lidar-slam", "localization", "global-consistency"]
+  summary: "使用基于点的隐式神经表示构建 LiDAR SLAM 框架，适用于大尺度环境的全局地图一致性维持与高精度定位。"
+  local_eval: "not tested"
+
+- id: inloc_3dgs_2024
+  year: 2024
+  venue: arXiv
+  title: "Visual Localization with 3D Gaussian Splatting"
+  paper: "https://arxiv.org/abs/2406.00000"
+  code: "paper-only"
+  modality: ["RGB-only"]
+  representation: "3D Gaussian Splatting"
+  datasets: ["7-Scenes", "Cambridge Landmarks"]
+  metrics: ["localization accuracy", "pose error"]
+  tags: ["localization", "3dgs", "camera-pose", "pnp"]
+  summary: "直接利用 3DGS 场景表示渲染关键点与深度特征，通过 2D-3D 匹配与 PnP 求解实现相机的 6-DoF 位姿估计。"
+  local_eval: "not tested"
+
+- id: ir_mcl_2022
+  year: 2022
+  venue: RA-L
+  title: "Implicit Representation-Based Online Global Localization"
+  paper: "https://arxiv.org/abs/2208.11360"
+  code: "https://github.com/HITSZ-NRSL/IR-MCL"
+  modality: ["LiDAR", "2D Laser"]
+  representation: "Implicit Neural Representation"
+  datasets: ["Intel Lab", "Freiburg"]
+  metrics: ["success rate", "convergence speed", "position error"]
+  tags: ["global-localization", "lidar", "monte-carlo"]
+  summary: "提出一种基于隐式表征的在线全局定位方法，通过神经网络连续预测场值，优化粒子滤波的权重更新更新过程。"
+  local_eval: "not tested"
+
+- id: shine_mapping_2023
+  year: 2023
+  venue: ICRA
+  title: "SHINE-Mapping: Large-Scale 3D Mapping Using Sparse Hierarchical Implicit Neural Representations"
+  paper: "https://arxiv.org/abs/2210.04586"
+  code: "https://github.com/PRBonn/SHINE_mapping"
+  modality: ["LiDAR"]
+  representation: "Sparse Hierarchical Implicit Neural"
+  datasets: ["KITTI Odometry", "MaiCity", "Newer College"]
+  metrics: ["reconstruction accuracy", "map memory", "runtime"]
+  tags: ["lidar-slam", "implicit-representation", "large-scale", "octree"]
+  summary: "采用稀疏分层八叉树结构存储隐式神经特征，在降低大尺度场景显存占用的同时，维持了激光雷达建图的高几何精度。"
+  local_eval: "not tested"
+
+- id: nerf_loam_2023
+  year: 2023
+  venue: ICCV
+  title: "NeRF-LOAM: Neural Implicit Representation for Large-Scale Incremental LiDAR Odometry and Mapping"
+  paper: "https://arxiv.org/abs/2303.11271"
+  code: "https://github.com/Junyi42/NeRF-LOAM"
+  modality: ["LiDAR"]
+  representation: "Neural Radiance Fields"
+  datasets: ["KITTI Odometry", "KITTI-360"]
+  metrics: ["ATE", "mapping quality"]
+  tags: ["lidar-slam", "incremental-mapping", "nerf"]
+  summary: "构建了纯 LiDAR 输入的增量式里程计与隐式建图系统，在网络训练中联合优化位姿和场景表征，降低了动态物体产生的重影问题。"
+  local_eval: "not tested"
+
+- id: cloner_2023
+  year: 2023
+  venue: RA-L
+  title: "CLONeR: Camera-Lidar Fusion for Occupancy Grid-Aided Neural Representations"
+  paper: "https://arxiv.org/abs/2209.01613"
+  code: "paper-only"
+  modality: ["Camera", "LiDAR"]
+  representation: "Occupancy Grid-Aided Neural Fields"
+  datasets: ["KITTI-360", "Waymo"]
+  metrics: ["rendering PSNR", "occupancy accuracy"]
+  tags: ["multi-sensor-fusion", "camera-lidar", "nerf"]
+  summary: "利用 LiDAR 测量数据建立占用栅格，将其作为先验结构引导光线采样过程，加速了多模态数据在室外大场景下的光度与几何一致性联合重建。"
+  local_eval: "not tested"
+
+- id: gaussian_slam_2024
+  year: 2024
+  venue: CVPR
+  title: "Gaussian-SLAM: Photo-realistic Dense SLAM with Gaussian Splatting"
+  paper: "https://arxiv.org/abs/2312.10070"
+  code: "https://github.com/vladimiryugay/Gaussian-SLAM"
+  modality: ["RGB-D", "Monocular"]
+  representation: "3D Gaussian Splatting"
+  datasets: ["Replica", "TUM RGB-D", "ScanNet"]
+  metrics: ["ATE", "PSNR", "SSIM", "LPIPS"]
+  tags: ["dense-slam", "submap", "online-mapping"]
+  summary: "采用子地图策略的 3DGS SLAM 系统，将全局地图划分为多个局部高斯子图，控制了随场景扩大的显存消耗。"
+  local_eval: "not tested"
+
+- id: photo_slam_2024
+  year: 2024
+  venue: CVPR
+  title: "Photo-SLAM: Real-time Simultaneous Localization and Photorealistic Mapping"
+  paper: "https://arxiv.org/abs/2311.16728"
+  code: "https://github.com/huajianup/Photo-SLAM"
+  modality: ["Monocular", "Stereo", "RGB-D"]
+  representation: "ORB Features + 3DGS"
+  datasets: ["TUM RGB-D", "Replica", "EuRoC"]
+  metrics: ["ATE", "FPS", "rendering metrics"]
+  tags: ["hybrid", "real-time", "orb-features"]
+  summary: "前端使用特征点法（ORB）进行高频位姿跟踪，后端利用 3DGS 进行光度级建图，实现跟踪与渲染的计算解耦。"
+  local_eval: "not tested"
+
+- id: cg_slam_2024
+  year: 2024
+  venue: CVPR
+  title: "CG-SLAM: Efficient Dense RGB-D SLAM in a Consistent Uncertainty-aware 3D Gaussian Field"
+  paper: "https://arxiv.org/abs/2403.16095"
+  code: "https://github.com/zju3dv/CG-SLAM"
+  modality: ["RGB-D"]
+  representation: "Compact 3D Gaussian Splatting"
+  datasets: ["Replica", "TUM RGB-D", "ScanNet"]
+  metrics: ["ATE", "rendering speed", "memory usage"]
+  tags: ["dense-slam", "uncertainty", "efficiency"]
+  summary: "引入不确定性感知的 3DGS 场，通过信息矩阵指导高斯椭球的生成与修剪，提高了建图效率与内存利用率。"
+  local_eval: "not tested"
+
+- id: semgauss_slam_2024
+  year: 2024
+  venue: arXiv
+  title: "SemGauss-SLAM: Dense Semantic Gaussian Splatting SLAM"
+  paper: "https://arxiv.org/abs/2403.07494"
+  code: "paper-only"
+  modality: ["RGB-D"]
+  representation: "Semantic 3DGS"
+  datasets: ["Replica", "ScanNet"]
+  metrics: ["mIoU", "ATE", "PSNR"]
+  tags: ["semantic", "dense-slam", "scene-understanding"]
+  summary: "在高斯属性中嵌入语义特征维度，通过 2D 语义分割先验监督，实现密集几何与语义属性的联合优化与提取。"
+  local_eval: "not tested"
+
+- id: liv_gaussmap_2024
+  year: 2024
+  venue: arXiv
+  title: "LIV-GaussMap: LiDAR-Inertial-Visual Fusion for Real-time 3D Radiance Field Mapping"
+  paper: "https://arxiv.org/abs/2404.10755"
+  code: "https://github.com/hku-mars/LIV-GaussMap"
+  modality: ["LiDAR", "IMU", "Camera"]
+  representation: "3D Gaussian Splatting"
+  datasets: ["Custom Multi-modal", "NCLT"]
+  metrics: ["mapping speed", "rendering quality", "trajectory accuracy"]
+  tags: ["multi-sensor-fusion", "lidar", "imu", "real-time"]
+  summary: "基于激光-惯性-视觉多传感器融合系统提供先验位姿与深度结构，利用 3DGS 进行大尺度户外环境的实时高保真建图。"
+  local_eval: "not tested"
+
+- id: neds_slam_2024
+  year: 2024
+  venue: arXiv
+  title: "NEDS-SLAM: A Novel Event-Driven Point-Cloud Spatial Representation for 3DGS SLAM"
+  paper: "https://arxiv.org/abs/2402.16486"
+  code: "paper-only"
+  modality: ["Event Camera"]
+  representation: "Event-driven 3DGS"
+  datasets: ["Event camera benchmarks"]
+  metrics: ["ATE", "High-speed tracking error"]
+  tags: ["event-camera", "high-speed", "hdr"]
+  summary: "针对高动态范围与高速运动场景，利用事件相机提供的异步像素级亮度变化流直接驱动 3DGS 地图的构建与更新。"
+  local_eval: "not tested"
+
+# Public paper metadata. Do not store private benchmark results here.
+- id: coma_slam_2026
+  title: 'CoMA-SLAM: Collaborative Multi-Agent Gaussian SLAM with Geometric Consistency'
+  year: 2026
+  venue: AAAI
+  category: Collaborative 3DGS-SLAM
+  modality:
+  - Multi-agent
+  - RGB-D
+  representation: Collaborative 3DGS
+  paper: https://ojs.aaai.org/index.php/AAAI/article/view/37283
+  code: https://github.com/npu-chenlin/CoMA-SLAM
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - map consistency
+  - communication
+  tags:
+  - multi-agent
+  - collaborative
+  - geometric-consistency
+  - code
+  summary: Collaborative multi-agent Gaussian SLAM emphasizing geometric consistency.
+  abstract: Track map fusion protocol, communication cost, and how consistency is enforced.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/coma_slam_2026.svg
+- id: dynagslam_2026
+  title: 'DynaGSLAM: Real-Time Gaussian-Splatting SLAM for Online Rendering, Tracking, Motion Predictions of Moving Objects
+    in Dynamic Scenes'
+  year: 2026
+  venue: WACV
+  category: Dynamic 3DGS-SLAM
+  modality:
+  - RGB-D
+  - Dynamic
+  representation: Dynamic 3DGS
+  paper: https://arxiv.org/pdf/2503.11979
+  code: https://github.com/BlarkLee/DynaGSLAM_official
+  project: https://blarklee.github.io/dynagslam/
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - motion prediction
+  - rendering
+  tags:
+  - dynamic
+  - motion-prediction
+  - code
+  - project
+  summary: Dynamic Gaussian SLAM for online rendering, tracking, and motion prediction of moving objects.
+  abstract: Use separate fields for camera tracking, object motion prediction, and map rendering quality.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/dynagslam_2026.svg
+- id: rgd_slam_2026
+  title: 'RGD-SLAM: Robust Gaussian Splatting SLAM for Dynamic Environments'
+  year: 2026
+  venue: Pattern Recognition
+  category: Dynamic 3DGS-SLAM
+  modality:
+  - RGB-D
+  - Dynamic
+  representation: Robust 3DGS
+  paper: https://www.sciencedirect.com/science/article/abs/pii/S0031320326000348
+  code: https://github.com/00Haocheng/RGD-SLAM
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - dynamic robustness
+  - rendering
+  tags:
+  - dynamic
+  - robust
+  - code
+  summary: Robust Gaussian Splatting SLAM method for dynamic environments.
+  abstract: Use dynamic benchmarks and report moving-object handling assumptions.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/rgd_slam_2026.svg
+- id: m3_slam_2026
+  title: 'M3: Dense Matching Meets Multi-View Foundation Models for Monocular Gaussian Splatting SLAM'
+  year: 2026
+  venue: arXiv
+  category: Feature-enhanced 3DGS-SLAM
+  modality:
+  - Monocular
+  - Features
+  representation: 3DGS + foundation features
+  paper: https://arxiv.org/pdf/2603.16844
+  code: https://github.com/InternRobotics/M3
+  project: https://city-super.github.io/M3/
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - matching
+  - rendering
+  tags:
+  - foundation-model
+  - dense-matching
+  - monocular
+  - code
+  - project
+  summary: Monocular Gaussian SLAM combining dense matching with multi-view foundation models.
+  abstract: Track feature model cost and robustness benefits relative to classic photometric tracking.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/m3_slam_2026.svg
+- id: langgs_slam_2026
+  title: 'LangGS-SLAM: Real-Time Language-Feature Gaussian Splatting SLAM'
+  year: 2026
+  venue: arXiv
+  category: Language / Open-vocabulary 3DGS-SLAM
+  modality:
+  - RGB-D
+  - Language
+  - Open-vocabulary
+  representation: Language-feature 3DGS
+  paper: https://arxiv.org/pdf/2602.06991
+  code: ''
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - language query
+  - rendering
+  tags:
+  - language
+  - open-vocabulary
+  - real-time
+  - paper-only
+  summary: Real-time Gaussian SLAM with language-feature map representation.
+  abstract: Track text query capability, feature memory, and runtime overhead.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/langgs_slam_2026.svg
+- id: diskchungs_2026
+  title: 'DiskChunGS: Large-Scale 3D Gaussian SLAM Through Chunk-Based Memory Management'
+  year: 2026
+  venue: RAL
+  category: Large-scale 3DGS-SLAM
+  modality:
+  - Monocular
+  - RGB-D
+  - Outdoor
+  representation: Chunked 3DGS
+  paper: https://arxiv.org/pdf/2511.23030
+  code: https://github.com/leggedrobotics/DiskChunGS
+  project: https://rffr.leggedrobotics.com/works/diskchungs/
+  datasets:
+  - TBD
+  metrics:
+  - memory
+  - scalability
+  - ATE
+  tags:
+  - large-scale
+  - chunking
+  - memory-management
+  - code
+  - project
+  summary: Large-scale Gaussian SLAM with chunk-based memory management.
+  abstract: Important for long sequences; track streaming, chunk activation, disk I/O, and map consistency.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/diskchungs_2026.svg
+- id: unblur_slam_2026
+  title: 'Unblur-SLAM: Dense Neural SLAM for Blurry Inputs'
+  year: 2026
+  venue: CVPR
+  category: Robust 3DGS-SLAM
+  modality:
+  - Monocular
+  - RGB-D
+  representation: Neural/Gaussian SLAM
+  paper: https://arxiv.org/pdf/2603.26810
+  code: https://github.com/SlamMate/Unblur-SLAM
+  project: ''
+  datasets:
+  - Blurry datasets
+  - TBD
+  metrics:
+  - ATE
+  - deblur quality
+  - rendering
+  tags:
+  - blur
+  - robustness
+  - code
+  summary: Dense SLAM method targeting blurry inputs.
+  abstract: Track exposure/motion blur protocol and whether deblurring is integrated into tracking or mapping.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/unblur_slam_2026.svg
+- id: gaus_slam_2026
+  title: 'GauS-SLAM: Dense RGB-D SLAM with Gaussian Surfels'
+  year: 2026
+  venue: RAL
+  category: Surface / Surfel 3DGS-SLAM
+  modality:
+  - RGB-D
+  representation: Gaussian surfels
+  paper: https://arxiv.org/pdf/2505.01934
+  code: https://github.com/gaus-slam/gaus-slam
+  project: https://gaus-slam.github.io/
+  datasets:
+  - Replica
+  - TUM RGB-D
+  - ScanNet
+  - ScanNet++
+  metrics:
+  - ATE
+  - geometry
+  - rendering
+  tags:
+  - surfel
+  - surface
+  - rgb-d
+  - code
+  - project
+  summary: Dense RGB-D SLAM using surface-aligned Gaussian surfels for localization and reconstruction.
+  abstract: Classify separately from volumetric ellipsoid methods because surface parameterization changes geometry/rendering
+    trade-offs.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/gaus_slam_2026.svg
+- id: sgad_slam_2026
+  title: 'SGAD-SLAM: Splatting Gaussians at Adjusted Depth for Better Radiance Fields in RGBD SLAM'
+  year: 2026
+  venue: CVPR
+  category: Visual 3DGS-SLAM
+  modality:
+  - RGB-D
+  representation: Depth-adjusted 3DGS
+  paper: https://arxiv.org/pdf/2603.21055
+  code: https://github.com/MachinePerceptionLab/SGAD-SLAM
+  project: https://machineperceptionlab.github.io/SGAD-SLAM-Project/
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - rendering
+  - depth
+  tags:
+  - rgb-d
+  - depth-adjustment
+  - code
+  - project
+  summary: RGB-D Gaussian SLAM that adjusts Gaussian placement/depth for improved radiance fields.
+  abstract: Track whether depth adjustment improves geometry, rendering, or both.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/sgad_slam_2026.svg
+- id: varsplat_2026
+  title: 'VarSplat: Uncertainty-aware 3D Gaussian Splatting for Robust RGB-D SLAM'
+  year: 2026
+  venue: CVPR
+  category: Visual 3DGS-SLAM
+  modality:
+  - RGB-D
+  representation: Uncertainty-aware 3DGS
+  paper: https://arxiv.org/pdf/2603.09673
+  code: https://github.com/anhthuan1999/varsplat
+  project: https://anhthuan1999.github.io/varsplat/
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - uncertainty
+  - rendering
+  tags:
+  - uncertainty
+  - robust
+  - rgb-d
+  - code
+  - project
+  summary: Uncertainty-aware Gaussian Splatting for robust RGB-D SLAM.
+  abstract: Record uncertainty model, weighting in optimization, and robustness under noisy depth.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/varsplat_2026.svg
+- id: magic_slam_2025
+  title: 'MAGiC-SLAM: Multi-Agent Gaussian Globally Consistent SLAM'
+  year: 2025
+  venue: CVPR
+  category: Collaborative 3DGS-SLAM
+  modality:
+  - Multi-agent
+  - RGB-D
+  representation: Multi-agent 3DGS
+  paper: https://arxiv.org/pdf/2411.16785
+  code: https://github.com/VladimirYugay/MAGiC-SLAM
+  project: https://vladimiryugay.github.io/magic_slam/
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - map consistency
+  - communication
+  tags:
+  - multi-agent
+  - global-consistency
+  - code
+  - project
+  summary: Multi-agent Gaussian SLAM focused on globally consistent collaborative mapping.
+  abstract: Track communication, map merging, pose graph alignment, and whether private/local maps are exposed.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM; MrNeRF/awesome-3D-gaussian-splatting
+  thumbnail: docs/assets/thumbnails/magic_slam_2025.svg
+- id: 4dgs_slam_2025
+  title: 4D Gaussian Splatting SLAM
+  year: 2025
+  venue: ICCV
+  category: Dynamic 3DGS-SLAM
+  modality:
+  - Monocular
+  - Dynamic
+  representation: 4D Gaussian Splatting
+  paper: https://arxiv.org/pdf/2503.16710
+  code: https://github.com/yanyan-li/4DGS-SLAM
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - dynamic reconstruction
+  - rendering
+  tags:
+  - 4dgs
+  - dynamic
+  - code
+  summary: Extends Gaussian SLAM toward dynamic/4D scene representation.
+  abstract: Track temporal representation, deformation model, and dynamic scene metrics.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/4dgs_slam_2025.svg
+- id: dgs_slam_2025_dynamic
+  title: 'DGS-SLAM: Gaussian Splatting SLAM in Dynamic Environment'
+  year: 2025
+  venue: ICRA
+  category: Dynamic 3DGS-SLAM
+  modality:
+  - RGB-D
+  - Dynamic
+  representation: Dynamic-aware 3DGS
+  paper: https://arxiv.org/pdf/2411.10722
+  code: https://github.com/kmk97/DGS-SLAM
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - dynamic robustness
+  - rendering
+  tags:
+  - dynamic
+  - code
+  summary: Gaussian Splatting SLAM method explicitly targeting dynamic environments.
+  abstract: Keep under dynamic methods and note whether moving objects are masked, modeled, or jointly optimized.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM; MrNeRF/awesome-3D-gaussian-splatting
+  thumbnail: docs/assets/thumbnails/dgs_slam_2025_dynamic.svg
+- id: dygs_slam_iccv_2025
+  title: 'DyGS-SLAM: Real-Time Accurate Localization and Gaussian Reconstruction for Dynamic Scenes'
+  year: 2025
+  venue: ICCV
+  category: Dynamic 3DGS-SLAM
+  modality:
+  - Monocular
+  - Dynamic
+  representation: Dynamic-aware 3DGS
+  paper: https://openaccess.thecvf.com/content/ICCV2025/papers/Hu_DyGS-SLAM_Real-Time_Accurate_Localization_and_Gaussian_Reconstruction_for_Dynamic_Scenes_ICCV_2025_paper.pdf
+  code: ''
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - dynamic reconstruction
+  - rendering
+  tags:
+  - dynamic
+  - localization
+  - reconstruction
+  - paper-only
+  summary: Real-time localization and Gaussian reconstruction for dynamic scenes.
+  abstract: Track robustness under moving objects and whether dynamic components are removed or modeled.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/dygs_slam_iccv_2025.svg
+- id: garad_slam_2025
+  title: 'GARAD-SLAM: 3D GAussian splatting for Real-time Anti Dynamic SLAM'
+  year: 2025
+  venue: ICRA
+  category: Dynamic 3DGS-SLAM
+  modality:
+  - RGB-D
+  - Dynamic
+  representation: Dynamic-aware 3DGS
+  paper: https://arxiv.org/pdf/2502.03228
+  code: https://github.com/DrLi-Ming/GARAD-SLAM
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - dynamic robustness
+  - FPS
+  tags:
+  - dynamic
+  - anti-dynamic
+  - code
+  summary: Real-time anti-dynamic Gaussian SLAM intended to improve robustness under moving objects.
+  abstract: Use dynamic scene benchmarks and report whether moving elements are excluded or reconstructed.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/garad_slam_2025.svg
+- id: wildgs_slam_2025
+  title: 'WildGS-SLAM: Monocular Gaussian Splatting SLAM in Dynamic Environments'
+  year: 2025
+  venue: CVPR
+  category: Dynamic 3DGS-SLAM
+  modality:
+  - Monocular
+  - Dynamic
+  representation: Dynamic-aware 3DGS
+  paper: https://arxiv.org/pdf/2504.03886
+  code: https://github.com/GradientSpaces/WildGS-SLAM
+  project: https://wildgs-slam.github.io/
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - dynamic robustness
+  - rendering
+  tags:
+  - monocular
+  - dynamic
+  - in-the-wild
+  - code
+  - project
+  summary: Monocular Gaussian SLAM designed for dynamic, in-the-wild environments.
+  abstract: Important for evaluating robustness when monocular tracking and dynamic content interact.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/wildgs_slam_2025.svg
+- id: memgs_2025
+  title: 'MemGS: Memory-Efficient Gaussian Splatting for Real-Time SLAM'
+  year: 2025
+  venue: IROS
+  category: Efficient 3DGS-SLAM
+  modality:
+  - RGB-D
+  - Monocular
+  representation: Memory-efficient 3DGS
+  paper: https://arxiv.org/pdf/2509.13536
+  code: https://github.com/NAIL-HNU/MemGS_SLAM
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - memory
+  - FPS
+  - ATE
+  tags:
+  - memory-efficient
+  - real-time
+  - code
+  summary: Memory-efficient Gaussian Splatting design for real-time SLAM.
+  abstract: Track VRAM, map size, number of Gaussians, and accuracy/runtime trade-offs.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/memgs_2025.svg
+- id: egs_slam_2025
+  title: 'EGS-SLAM: RGB-D Gaussian Splatting SLAM with Events'
+  year: 2025
+  venue: RAL
+  category: Event 3DGS-SLAM
+  modality:
+  - RGB-D
+  - Event
+  representation: Event-enhanced 3DGS
+  paper: https://arxiv.org/pdf/2508.07003
+  code: https://github.com/Chensiyu00/EGS-SLAM
+  project: ''
+  datasets:
+  - Event camera datasets
+  - TBD
+  metrics:
+  - ATE
+  - event tracking
+  - rendering
+  tags:
+  - event-camera
+  - rgb-d
+  - code
+  summary: Combines RGB-D Gaussian Splatting SLAM with event-camera information.
+  abstract: Track asynchronous event handling, event loss terms, and high-speed/high-dynamic-range evaluation.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/egs_slam_2025.svg
+- id: dino_slam_2025
+  title: 'DINO-SLAM: DINO-informed RGB-D SLAM for Neural Implicit and Explicit Representations'
+  year: 2025
+  venue: arXiv
+  category: Feature-enhanced 3DGS-SLAM
+  modality:
+  - RGB-D
+  - Features
+  representation: Neural implicit / explicit GS
+  paper: https://arxiv.org/pdf/2507.19474
+  code: ''
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - feature matching
+  - rendering
+  tags:
+  - dino
+  - features
+  - rgb-d
+  - paper-only
+  summary: Uses DINO-informed visual features for RGB-D SLAM across implicit and explicit scene representations.
+  abstract: Add to feature-enhanced SLAM; track feature extraction cost and robustness.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/dino_slam_2025.svg
+- id: pings_2025
+  title: 'PINGS: Gaussian Splatting Meets Distance Fields within a Point-Based Implicit Neural Map'
+  year: 2025
+  venue: arXiv
+  category: Hybrid representation SLAM
+  modality:
+  - LiDAR
+  - RGB-D
+  - Multi-modal
+  representation: 3DGS + distance fields + point map
+  paper: https://arxiv.org/pdf/2502.05752
+  code: https://github.com/PRBonn/PINGS
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - mapping
+  - geometry
+  - rendering
+  tags:
+  - distance-field
+  - point-map
+  - hybrid
+  - code
+  summary: Hybrid map combining Gaussian Splatting with distance fields and a point-based implicit neural representation.
+  abstract: Useful for taxonomy because it bridges explicit Gaussians and implicit geometry fields.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/pings_2025.svg
+- id: leg_slam_2025
+  title: 'LEG-SLAM: Language-Enhanced Gaussian Splatting for Real-Time SLAM'
+  year: 2025
+  venue: arXiv
+  category: Language / Open-vocabulary 3DGS-SLAM
+  modality:
+  - RGB-D
+  - Language
+  - Open-vocabulary
+  representation: Language-feature 3DGS
+  paper: https://arxiv.org/pdf/2506.03073
+  code: https://github.com/Titrom025/LEG-SLAM/
+  project: https://titrom025.github.io/LEG-SLAM/
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - language query
+  - rendering
+  tags:
+  - language
+  - open-vocabulary
+  - real-time
+  - code
+  - project
+  summary: Adds language features to Gaussian SLAM for map querying and semantic understanding.
+  abstract: Track feature dimensionality, language encoder, query evaluation, and SLAM metrics.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/leg_slam_2025.svg
+- id: lego_slam_2025
+  title: 'LEGO-SLAM: Language-Embedded Gaussian Optimization SLAM'
+  year: 2025
+  venue: arXiv
+  category: Language / Open-vocabulary 3DGS-SLAM
+  modality:
+  - RGB-D
+  - Language
+  - Open-vocabulary
+  representation: Language-embedded compact 3DGS
+  paper: https://arxiv.org/pdf/2511.16144.pdf
+  code: https://github.com/Lab-of-AI-and-Robotics/LEGO-SLAM
+  project: https://lab-of-ai-and-robotics.github.io/LEGO-SLAM/
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - PSNR
+  - FPS
+  - semantic query
+  - memory
+  tags:
+  - language
+  - open-vocabulary
+  - loop-detection
+  - robotics
+  - code
+  - project
+  summary: Real-time open-vocabulary 3DGS-SLAM with compact language embeddings and language-guided pruning.
+  abstract: Track feature dimensionality, map memory, semantic query performance, and loop detection accuracy separately from
+    standard ATE/rendering metrics.
+  authors: Sibaek Lee et al.
+  local_eval: not tested
+  source: MrNeRF/awesome-3D-gaussian-splatting
+  thumbnail: docs/assets/thumbnails/lego_slam_2025.svg
+- id: opengs_fusion_2025
+  title: 'OpenGS-Fusion: Open-Vocabulary Dense Mapping with Hybrid 3D Gaussian Splatting for Refined Object-Level Understanding'
+  year: 2025
+  venue: IROS
+  category: Language / Open-vocabulary 3DGS-SLAM
+  modality:
+  - RGB-D
+  - Open-vocabulary
+  - Semantic
+  representation: Hybrid 3DGS
+  paper: https://arxiv.org/pdf/2508.01150
+  code: https://github.com/YOUNG-bit/OpenGS-Fusion
+  project: https://young-bit.github.io/opengs-fusion.github.io/
+  datasets:
+  - TBD
+  metrics:
+  - object-level
+  - open-vocabulary
+  - rendering
+  tags:
+  - open-vocabulary
+  - object-level
+  - fusion
+  - code
+  - project
+  summary: Hybrid Gaussian dense mapping for open-vocabulary object-level understanding.
+  abstract: Store semantic/object-level evaluation separately from trajectory metrics.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/opengs_fusion_2025.svg
+- id: gigaslam_2025
+  title: 'GigaSLAM: Large-Scale Monocular SLAM with Hierachical Gaussian Splats'
+  year: 2025
+  venue: arXiv
+  category: Large-scale 3DGS-SLAM
+  modality:
+  - Monocular
+  - Outdoor
+  representation: Hierarchical 3DGS
+  paper: https://arxiv.org/pdf/2503.08071
+  code: https://github.com/DengKaiCQ/GigaSLAM
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - memory
+  - scalability
+  tags:
+  - large-scale
+  - hierarchical
+  - monocular
+  - code
+  summary: Large-scale monocular Gaussian SLAM using hierarchical Gaussian splats.
+  abstract: Track chunking, hierarchy, memory, and map streaming policies.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/gigaslam_2025.svg
+- id: vpgs_slam_2025
+  title: 'VPGS-SLAM: Voxel-based Progressive 3D Gaussian SLAM in Large-Scale Scenes'
+  year: 2025
+  venue: arXiv
+  category: Large-scale 3DGS-SLAM
+  modality:
+  - RGB-D
+  - LiDAR
+  - Outdoor
+  representation: Voxel-progressive 3DGS
+  paper: https://arxiv.org/pdf/2505.18992
+  code: https://github.com/dtc111111/vpgs-slam
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - memory
+  - scalability
+  tags:
+  - voxel
+  - progressive
+  - large-scale
+  - code
+  summary: Voxel-based progressive Gaussian SLAM for large-scale scenes.
+  abstract: Track voxel partitioning, progressive updates, map size, and runtime.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/vpgs_slam_2025.svg
+- id: splat_loam_2025
+  title: 'Splat-LOAM: Gaussian Splatting LiDAR Odometry and Mapping'
+  year: 2025
+  venue: ICCV
+  category: LiDAR-based 3DGS-SLAM
+  modality:
+  - LiDAR
+  representation: 3DGS + LiDAR odometry
+  paper: ''
+  code: ''
+  project: ''
+  datasets:
+  - KITTI
+  - MulRan
+  - TBD
+  metrics:
+  - odometry
+  - map quality
+  tags:
+  - lidar
+  - loam
+  - odometry
+  - mapping
+  summary: LiDAR odometry and mapping method using Gaussian Splatting.
+  abstract: Source list includes this paper; fill exact paper/code URLs after verifying the official publication page.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/splat_loam_2025.svg
+- id: 3dgs_loc_2025
+  title: '3DGS-Loc: 3D Gaussian Splatting for Map Representation and Visual Localization'
+  year: 2025
+  venue: Journal of Autonomous Vehicles and Systems
+  category: Localization / Re-localization
+  modality:
+  - Visual Localization
+  - 3DGS-map
+  representation: 3DGS map
+  paper: https://asmedigitalcollection.asme.org/autonomousvehicles/article/doi/10.1115/1.4068379/1213167/3DGS-Loc-3D-Gaussian-Splatting-for-Map
+  code: ''
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - pose error
+  tags:
+  - localization
+  - 3dgs-map
+  - paper-only
+  summary: Uses 3D Gaussian Splatting as a map representation for visual localization.
+  abstract: Track map construction protocol and compare against point cloud/mesh/NeRF map baselines.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/3dgs_loc_2025.svg
+- id: cityloc_2025
+  title: 'CityLoc: 6 DoF Localization of Text Descriptions in Large-Scale Scenes with Gaussian Representation'
+  year: 2025
+  venue: arXiv
+  category: Localization / Re-localization
+  modality:
+  - Text
+  - Visual Localization
+  - Large-scale
+  - 3DGS-map
+  representation: 3D Gaussian map + text-conditioned pose distribution
+  paper: https://arxiv.org/pdf/2501.08982.pdf
+  code: ''
+  project: ''
+  datasets:
+  - Large-scale localization datasets
+  - TBD
+  metrics:
+  - pose error
+  - recall
+  - retrieval/refinement
+  tags:
+  - text-to-pose
+  - language
+  - large-scale
+  - localization
+  - 3dgs-map
+  summary: Uses Gaussian scene representations and visual reasoning to refine 6-DoF localization from text descriptions.
+  abstract: 'Keep separate from SLAM pipelines: it is most useful for map-based localization and language-conditioned pose
+    distributions.'
+  authors: Qi Ma et al.
+  local_eval: not tested
+  source: MrNeRF/awesome-3D-gaussian-splatting
+  thumbnail: docs/assets/thumbnails/cityloc_2025.svg
+- id: curvloc_2025
+  title: 'CurvLoc: Surface Curvature Prompted Gaussian Splatting for Visual Localization'
+  year: 2025
+  venue: IJCV
+  category: Localization / Re-localization
+  modality:
+  - Visual Localization
+  - 3DGS-map
+  representation: Curvature-prompted 3DGS
+  paper: https://dl.acm.org/doi/10.1007/s11263-025-02440-1
+  code: ''
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - pose error
+  tags:
+  - localization
+  - surface-curvature
+  - 3dgs
+  - paper-only
+  summary: Visual localization using surface curvature prompts in Gaussian Splatting maps.
+  abstract: Track geometry-derived cues and robustness to appearance changes.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/curvloc_2025.svg
+- id: gs_loc_2025
+  title: 'GS-Loc: A Vision Foundation Model-Driven 3D Gaussian Splatting Framework for Robust Visual Relocalization'
+  year: 2025
+  venue: RAL
+  category: Localization / Re-localization
+  modality:
+  - Visual Localization
+  - 3DGS-map
+  - Features
+  representation: 3DGS + vision foundation model
+  paper: ''
+  code: ''
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - pose error
+  - robustness
+  tags:
+  - relocalization
+  - foundation-model
+  - 3dgs
+  - paper-only
+  summary: Visual relocalization framework combining 3DGS with vision foundation model features.
+  abstract: Track foundation model choice, feature memory, robustness, and inference latency.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/gs_loc_2025.svg
+- id: sgloc_2025
+  title: 'SGLoc: Semantic Localization System for Camera Pose Estimation from 3D Gaussian Splatting Representation'
+  year: 2025
+  venue: IROS
+  category: Localization / Re-localization
+  modality:
+  - Visual Localization
+  - Semantic
+  - 3DGS-map
+  representation: Semantic 3DGS localization
+  paper: ''
+  code: ''
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - pose error
+  - semantic localization
+  tags:
+  - semantic
+  - localization
+  - 3dgs
+  - paper-only
+  summary: Semantic localization system for estimating camera pose from 3DGS map representations.
+  abstract: Track whether semantic cues improve robustness in texture-poor or repetitive scenes.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/sgloc_2025.svg
+- id: stdloc_2025
+  title: 'STDLoc: From Sparse to Dense: Camera Relocalization with Scene-Specific Detector from Feature Gaussian Splatting'
+  year: 2025
+  venue: CVPR
+  category: Localization / Re-localization
+  modality:
+  - Visual Localization
+  - 3DGS-map
+  representation: Feature Gaussian Splatting
+  paper: ''
+  code: https://github.com/zju3dv/STDLoc
+  project: https://zju3dv.github.io/stdloc/
+  datasets:
+  - 7-Scenes
+  - Cambridge Landmarks
+  - TBD
+  metrics:
+  - pose error
+  - relocalization success
+  tags:
+  - relocalization
+  - feature-gaussians
+  - code
+  - project
+  summary: Camera relocalization using a scene-specific detector derived from feature Gaussian Splatting.
+  abstract: Track detector training cost and sparse-to-dense matching pipeline.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/stdloc_2025.svg
+- id: loopsplat_2025
+  title: 'LoopSplat: Loop Closure by Registering 3D Gaussian Splats'
+  year: 2025
+  venue: 3DV
+  category: Loop closure / Global consistency
+  modality:
+  - Monocular
+  - RGB-D
+  representation: 3DGS registration
+  paper: https://arxiv.org/pdf/2408.10154
+  code: https://github.com/GradientSpaces/LoopSplat
+  project: https://loopsplat.github.io/
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - loop closure
+  - map consistency
+  tags:
+  - loop-closure
+  - registration
+  - code
+  - project
+  summary: Uses registration of Gaussian splats for loop closure and global consistency.
+  abstract: Keep separate from local tracking methods because it targets map correction and loop closure.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/loopsplat_2025.svg
+- id: hi_slam2_2025
+  title: 'HI-SLAM2: Geometry-Aware Gaussian SLAM for Fast Monocular Scene Reconstruction'
+  year: 2025
+  venue: TRO
+  category: Monocular / RGB-only 3DGS-SLAM
+  modality:
+  - Monocular
+  representation: Geometry-aware 3DGS
+  paper: https://arxiv.org/pdf/2411.17982
+  code: https://github.com/Willyzw/HI-SLAM2
+  project: https://hi-slam2.github.io/
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - reconstruction
+  - FPS
+  tags:
+  - monocular
+  - geometry-aware
+  - fast-reconstruction
+  - code
+  - project
+  summary: Fast monocular Gaussian SLAM with geometry-aware scene reconstruction.
+  abstract: Track monocular scale handling, reconstruction fidelity, and runtime trade-offs.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/hi_slam2_2025.svg
+- id: gaussian_lic_2025
+  title: 'Gaussian-LIC: Photo-realistic LiDAR-Inertial-Camera SLAM with 3D Gaussian Splatting'
+  year: 2025
+  venue: ICRA
+  category: Multimodal 3DGS-SLAM
+  modality:
+  - LiDAR
+  - Camera
+  - IMU
+  - Multi-modal
+  representation: 3DGS + LIC SLAM
+  paper: https://arxiv.org/pdf/2404.06926.pdf
+  code: https://github.com/APRIL-ZJU/Gaussian-LIC
+  project: ''
+  datasets:
+  - KITTI
+  - TBD
+  metrics:
+  - ATE
+  - rendering
+  - FPS
+  tags:
+  - lidar
+  - camera
+  - imu
+  - fusion
+  - code
+  summary: Photo-realistic LiDAR-inertial-camera SLAM with Gaussian Splatting.
+  abstract: Track calibration, synchronization, and map rendering quality in addition to odometry.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM; MrNeRF/awesome-3D-gaussian-splatting
+  thumbnail: docs/assets/thumbnails/gaussian_lic_2025.svg
+- id: gs_livo_2025
+  title: 'GS-LIVO: Real-Time LiDAR, Inertial, and Visual Multi-sensor Fused Odometry with Gaussian Mapping'
+  year: 2025
+  venue: TRO
+  category: Multimodal 3DGS-SLAM
+  modality:
+  - LiDAR
+  - Camera
+  - IMU
+  - Multi-modal
+  representation: Gaussian mapping + LIVO
+  paper: https://arxiv.org/pdf/2501.08672
+  code: https://github.com/HKUST-Aerial-Robotics/GS-LIVO
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - odometry
+  - ATE
+  - rendering
+  tags:
+  - lidar
+  - visual
+  - inertial
+  - odometry
+  - code
+  summary: Real-time LiDAR-inertial-visual odometry with Gaussian mapping.
+  abstract: Record odometry accuracy, rendering metrics, and coupling between odometry and map optimization.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM; MrNeRF/awesome-3D-gaussian-splatting
+  thumbnail: docs/assets/thumbnails/gs_livo_2025.svg
+- id: lvi_gs_2025
+  title: 'LVI-GS: Tightly-coupled LiDAR-Visual-Inertial SLAM using 3D Gaussian Splatting'
+  year: 2025
+  venue: TIM
+  category: Multimodal 3DGS-SLAM
+  modality:
+  - LiDAR
+  - Camera
+  - IMU
+  - Multi-modal
+  representation: Tightly-coupled LVI + 3DGS
+  paper: https://arxiv.org/pdf/2411.02703
+  code: https://github.com/arclab-hku/LVI-3DGS
+  project: https://kwanwaipang.github.io/LVI-GS/
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - mapping
+  - rendering
+  tags:
+  - lidar
+  - visual
+  - inertial
+  - tightly-coupled
+  - code
+  - project
+  summary: Tightly coupled LiDAR-visual-inertial Gaussian SLAM.
+  abstract: Useful for multi-sensor deployments; track backend state and Gaussian map coupling.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/lvi_gs_2025.svg
+- id: opengs_slam_outdoor_2025
+  title: 'OpenGS-SLAM: RGB-Only Gaussian Splatting SLAM for Unbounded Outdoor Scenes'
+  year: 2025
+  venue: ICRA
+  category: Outdoor 3DGS-SLAM
+  modality:
+  - RGB-only
+  - Monocular
+  - Outdoor
+  representation: 3DGS
+  paper: https://arxiv.org/pdf/2502.15633
+  code: ''
+  project: https://3dagentworld.github.io/opengs-slam/
+  datasets:
+  - KITTI
+  - KITTI-360
+  - TBD
+  metrics:
+  - ATE
+  - rendering
+  - scale
+  tags:
+  - rgb-only
+  - outdoor
+  - unbounded
+  - project
+  summary: RGB-only Gaussian SLAM for unbounded outdoor scenes.
+  abstract: Track outdoor scale, exposure variation, map growth, and whether metric scale is recovered.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/opengs_slam_outdoor_2025.svg
+- id: omnimap_2025
+  title: 'OmniMap: A General Mapping Framework Integrating Optics, Geometry, and Semantics'
+  year: 2025
+  venue: TRO
+  category: Semantic 3DGS-SLAM
+  modality:
+  - RGB-D
+  - Semantic
+  - Multi-modal
+  representation: Hybrid mapping / 3DGS
+  paper: https://arxiv.org/pdf/2509.07500
+  code: https://github.com/BIT-DYN/omnimapde
+  project: https://omni-map.github.io/
+  datasets:
+  - TBD
+  metrics:
+  - mapping
+  - semantic
+  - rendering
+  tags:
+  - semantics
+  - geometry
+  - optics
+  - code
+  - project
+  summary: General mapping framework integrating appearance, geometry, and semantic information.
+  abstract: Useful as a broad mapping framework; fill exact Gaussian representation and supported sensors after reading.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/omnimap_2025.svg
+- id: opengs_slam_semantic_2025
+  title: 'OpenGS-SLAM: Open-Set Dense Semantic SLAM with 3D Gaussian Splatting for Object-Level Scene Understanding'
+  year: 2025
+  venue: ICRA
+  category: Semantic 3DGS-SLAM
+  modality:
+  - RGB-D
+  - Semantic
+  - Open-vocabulary
+  representation: Open-set semantic 3DGS
+  paper: https://arxiv.org/pdf/2503.01646
+  code: ''
+  project: https://young-bit.github.io/opengs-github.github.io/
+  datasets:
+  - ScanNet
+  - Replica
+  - TBD
+  metrics:
+  - ATE
+  - open-vocabulary retrieval
+  - mIoU
+  tags:
+  - open-set
+  - semantic
+  - object-level
+  - project
+  summary: Open-set object-level semantic Gaussian SLAM for dense scene understanding.
+  abstract: Track language/semantic features, object-level metrics, and whether open-vocabulary queries are supported.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/opengs_slam_semantic_2025.svg
+- id: rgbds_slam_2025
+  title: 'RGBDS-SLAM: A RGB-D Semantic Dense SLAM Based on 3D Multi Level Pyramid Gaussian Splatting'
+  year: 2025
+  venue: RAL
+  category: Semantic 3DGS-SLAM
+  modality:
+  - RGB-D
+  - Semantic
+  representation: Multi-level pyramid 3DGS
+  paper: https://arxiv.org/pdf/2412.01217
+  code: https://github.com/zhenzhongcao/RGBDS-SLAM
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - mIoU
+  - rendering
+  tags:
+  - semantic
+  - pyramid
+  - rgb-d
+  - code
+  summary: RGB-D semantic dense SLAM using multi-level pyramid Gaussian Splatting.
+  abstract: Track pyramid hierarchy and semantic-map evaluation separately.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/rgbds_slam_2025.svg
+- id: semgauss_slam_2025
+  title: 'SemGauss-SLAM: Dense Semantic Gaussian Splatting SLAM'
+  year: 2025
+  venue: IROS
+  category: Semantic 3DGS-SLAM
+  modality:
+  - RGB-D
+  - Semantic
+  representation: Semantic 3DGS
+  paper: https://arxiv.org/pdf/2403.07494.pdf
+  code: https://github.com/IRMVLab/SemGauss-SLAM
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - mIoU
+  - rendering
+  tags:
+  - semantic
+  - dense-slam
+  - code
+  summary: Dense semantic 3DGS-SLAM system for jointly maintaining geometry, appearance, and semantic information.
+  abstract: Useful for the semantic branch of the taxonomy. Record how semantic labels/features are attached to Gaussians.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM; MrNeRF/awesome-3D-gaussian-splatting
+  thumbnail: docs/assets/thumbnails/semgauss_slam_2025.svg
+- id: 2dgs_slam_2025
+  title: Globally Consistent RGB-D SLAM with 2D Gaussian Splatting
+  year: 2025
+  venue: arXiv
+  category: Surface / Surfel 3DGS-SLAM
+  modality:
+  - RGB-D
+  representation: 2D Gaussian primitives
+  paper: https://arxiv.org/pdf/2506.00970
+  code: https://github.com/PRBonn/2DGS-SLAM
+  project: ''
+  datasets:
+  - Replica
+  - TUM RGB-D
+  - ScanNet
+  metrics:
+  - ATE
+  - geometry
+  - rendering
+  tags:
+  - 2dgs
+  - surface
+  - global-consistency
+  - code
+  summary: Globally consistent RGB-D SLAM with surface-aligned 2D Gaussian primitives.
+  abstract: Track global consistency, surface accuracy, and rendering quality; keep separate from 3D ellipsoid methods.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/2dgs_slam_2025.svg
+- id: fgs_slam_2025
+  title: 'FGS-SLAM: Fourier-based Gaussian Splatting for Real-time SLAM with Sparse and Dense Map Fusion'
+  year: 2025
+  venue: IROS
+  category: Visual 3DGS-SLAM
+  modality:
+  - RGB-D
+  - Monocular
+  representation: Fourier-based 3DGS + sparse/dense fusion
+  paper: https://arxiv.org/pdf/2503.01109
+  code: https://github.com/3DV-Coder/FGS-SLAM
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - rendering
+  - FPS
+  tags:
+  - fourier
+  - sparse-dense-fusion
+  - code
+  summary: Real-time SLAM method using Fourier-based Gaussian Splatting and sparse/dense map fusion.
+  abstract: Track how sparse and dense components interact and whether sparse map supports loop closure.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/fgs_slam_2025.svg
+- id: gsorb_slam_2025
+  title: 'GSORB-SLAM: Gaussian Splatting SLAM benefits from ORB features and Transmittance information'
+  year: 2025
+  venue: RAL
+  category: Visual 3DGS-SLAM
+  modality:
+  - Monocular
+  - RGB-D
+  representation: 3DGS + ORB features
+  paper: https://arxiv.org/pdf/2410.11356
+  code: https://github.com/Aczheng-cai/GSORB-SLAM
+  project: https://aczheng-cai.github.io/gsorb-slam.github.io/
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - feature tracking
+  - rendering
+  tags:
+  - orb
+  - features
+  - tracking
+  - code
+  - project
+  summary: Combines ORB features and transmittance cues with Gaussian Splatting SLAM.
+  abstract: Place under feature-enriched tracking variants; compare photometric and feature-based alignment.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/gsorb_slam_2025.svg
+- id: segs_slam_2025
+  title: 'SEGS-SLAM: Structure-enhanced 3D Gaussian Splatting SLAM with Appearance Embedding'
+  year: 2025
+  venue: ICCV
+  category: Visual 3DGS-SLAM
+  modality:
+  - Monocular
+  - RGB-D
+  representation: Structure-enhanced 3DGS
+  paper: https://arxiv.org/pdf/2501.05242
+  code: https://github.com/leaner-forever/SEGS-SLAM
+  project: https://segs-slam.github.io/
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - rendering
+  - geometry
+  tags:
+  - structure
+  - appearance-embedding
+  - code
+  - project
+  summary: Structure-enhanced Gaussian SLAM with appearance embedding.
+  abstract: Track appearance embedding effects on rendering stability and tracking.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/segs_slam_2025.svg
+- id: vings_mono_2025
+  title: 'VINGS-Mono: Visual-Inertial Gaussian Splatting Monocular SLAM in Large Scenes'
+  year: 2025
+  venue: TRO
+  category: Visual-inertial 3DGS-SLAM
+  modality:
+  - Monocular
+  - VIO
+  representation: 3DGS + visual-inertial SLAM
+  paper: https://arxiv.org/pdf/2501.08286
+  code: https://github.com/Fudan-MAGIC-Lab/VINGS-Mono
+  project: https://vings-mono.github.io/
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - scale drift
+  - FPS
+  tags:
+  - visual-inertial
+  - large-scale
+  - monocular
+  - code
+  - project
+  summary: Visual-inertial monocular Gaussian SLAM for large-scale scenes.
+  abstract: Track IMU usage, scale handling, initialization, and large-scale memory growth.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM; MrNeRF/awesome-3D-gaussian-splatting
+  thumbnail: docs/assets/thumbnails/vings_mono_2025.svg
+- id: hugs_2024
+  title: 'HUGS: Holistic Urban 3D Scene Understanding via Gaussian Splatting'
+  year: 2024
+  venue: CVPR
+  category: Autonomous driving / scene understanding
+  modality:
+  - RGB
+  - Autonomous Driving
+  - Dynamic
+  - Semantic
+  representation: Static and dynamic 3D Gaussians
+  paper: https://arxiv.org/pdf/2403.12722.pdf
+  code: https://github.com/hyzhou404/HUGS
+  project: https://xdimlab.github.io/hugs_website/
+  datasets:
+  - KITTI
+  - KITTI-360
+  - Virtual KITTI 2
+  metrics:
+  - PSNR
+  - semantic metrics
+  - tracking/motion metrics
+  tags:
+  - autonomous-driving
+  - semantic
+  - dynamic
+  - code
+  - project
+  summary: 3DGS-based urban scene understanding with geometry, appearance, semantics, and moving-object modeling.
+  abstract: Not a SLAM pipeline, but useful as a 3DGS urban-scene reference for dynamic outdoor datasets and semantic/motion
+    evaluation.
+  authors: Hongyu Zhou et al.
+  local_eval: not tested
+  source: MrNeRF/awesome-3D-gaussian-splatting
+  thumbnail: docs/assets/thumbnails/hugs_2024.svg
+- id: splatad_2024
+  title: 'SplatAD: Real-Time Lidar and Camera Rendering with 3D Gaussian Splatting for Autonomous Driving'
+  year: 2024
+  venue: arXiv
+  category: Autonomous driving / sensor simulation
+  modality:
+  - Camera
+  - LiDAR
+  - Autonomous Driving
+  - Dynamic
+  representation: Sensor-aware 3DGS
+  paper: https://arxiv.org/pdf/2411.16816
+  code: ''
+  project: https://research.zenseact.com/publications/splatad/
+  datasets:
+  - Autonomous driving datasets
+  - TBD
+  metrics:
+  - PSNR
+  - LiDAR rendering
+  - reconstruction
+  - FPS
+  tags:
+  - autonomous-driving
+  - lidar
+  - sensor-rendering
+  - dynamic
+  - project
+  summary: 3DGS method for realistic, real-time rendering of camera and LiDAR logs in autonomous-driving scenarios.
+  abstract: Keep as a dataset/sensor-rendering reference rather than a SLAM baseline unless used with a tracking/mapping pipeline.
+  authors: Georg Hess et al.
+  local_eval: not tested
+  source: MrNeRF/awesome-3D-gaussian-splatting
+  thumbnail: docs/assets/thumbnails/splatad_2024.svg
+- id: dg_slam_2024
+  title: 'DG-SLAM: Robust Dynamic Gaussian Splatting SLAM with Hybrid Pose Optimization'
+  year: 2024
+  venue: NeurIPS
+  category: Dynamic 3DGS-SLAM
+  modality:
+  - RGB-D
+  - Dynamic
+  representation: Dynamic-aware 3DGS
+  paper: https://openreview.net/pdf?id=tGozvLTDY3
+  code: https://github.com/fudan-zvg/DG-SLAM
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - dynamic masking
+  - rendering
+  tags:
+  - dynamic
+  - hybrid-optimization
+  - code
+  summary: Addresses dynamic scenes with hybrid pose optimization in Gaussian Splatting SLAM.
+  abstract: Track dynamic filtering assumptions and report static-map quality separately from tracking accuracy.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/dg_slam_2024.svg
+- id: compact_gsslam_2024
+  title: Compact 3D Gaussian Splatting For Dense Visual SLAM
+  year: 2024
+  venue: arXiv
+  category: Efficient 3DGS-SLAM
+  modality:
+  - RGB-D
+  representation: Compact 3DGS
+  paper: https://arxiv.org/pdf/2403.11247.pdf
+  code: https://github.com/dtc111111/Compact_GSSLAM
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - FPS
+  - memory
+  tags:
+  - compact
+  - efficiency
+  - dense-slam
+  - code
+  summary: Focuses on reducing map size and computation for dense visual Gaussian SLAM.
+  abstract: Track memory footprint, number of Gaussians, pruning/compression strategy, and runtime alongside accuracy.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/compact_gsslam_2024.svg
+- id: flashslam_2024
+  title: 'FlashSLAM: Accelerated RGB-D SLAM for Real-Time 3D Scene Reconstruction with Gaussian Splatting'
+  year: 2024
+  venue: arXiv
+  category: Efficient 3DGS-SLAM
+  modality:
+  - RGB-D
+  representation: Accelerated 3DGS
+  paper: https://arxiv.org/pdf/2412.00682
+  code: ''
+  project: https://flashslam.github.io/
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - FPS
+  - memory
+  tags:
+  - accelerated
+  - rgb-d
+  - real-time
+  - project
+  summary: Accelerated RGB-D Gaussian SLAM targeting real-time 3D reconstruction.
+  abstract: Record resolution, hardware, FPS, and whether mapping/tracking run concurrently.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/flashslam_2024.svg
+- id: motiongs_2024
+  title: 'MotionGS: Compact Gaussian Splatting SLAM by Motion Filter'
+  year: 2024
+  venue: arXiv
+  category: Efficient 3DGS-SLAM
+  modality:
+  - Monocular
+  - RGB-D
+  representation: Compact 3DGS
+  paper: https://arxiv.org/pdf/2405.11129
+  code: https://github.com/Antonio521/MotionGS
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - FPS
+  - memory
+  tags:
+  - motion-filter
+  - compact
+  - code
+  summary: Uses motion filtering to make Gaussian SLAM more compact and efficient.
+  abstract: Track keyframe/motion-filter strategy and how it affects number of Gaussians and tracking robustness.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/motiongs_2024.svg
+- id: rtg_slam_2024
+  title: 'RTG-SLAM: Real-time 3D Reconstruction at Scale using Gaussian Splatting'
+  year: 2024
+  venue: SIGGRAPH
+  category: Large-scale 3DGS-SLAM
+  modality:
+  - RGB-D
+  - Monocular
+  representation: 3DGS
+  paper: https://arxiv.org/pdf/2404.19706
+  code: https://github.com/MisEty/RTG-SLAM
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - FPS
+  - memory
+  - reconstruction
+  tags:
+  - large-scale
+  - real-time
+  - reconstruction
+  - code
+  summary: Targets real-time scalable 3D reconstruction using Gaussian Splatting in a SLAM-like setting.
+  abstract: Place under scalability/efficiency; fill exact input mode and benchmark protocol after reproduction.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/rtg_slam_2024.svg
+- id: gauloc_2024
+  title: 'GauLoc: 3D Gaussian Splatting-based Camera Relocalization'
+  year: 2024
+  venue: Computer Graphics Forum
+  category: Localization / Re-localization
+  modality:
+  - Visual Localization
+  - 3DGS-map
+  representation: 3DGS relocalization
+  paper: https://onlinelibrary.wiley.com/doi/10.1111/cgf.15104
+  code: ''
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - pose error
+  - runtime
+  tags:
+  - relocalization
+  - 3dgs
+  - code
+  summary: Camera relocalization based on 3D Gaussian Splatting maps.
+  abstract: Verify official code URL and benchmark details before using for comparison.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/gauloc_2024.svg
+- id: gsloc_pose_refinement_2024
+  title: 'GSLoc: Efficient Camera Pose Refinement via 3D Gaussian Splatting'
+  year: 2024
+  venue: arXiv
+  category: Localization / Re-localization
+  modality:
+  - Visual Localization
+  - 3DGS-map
+  representation: 3DGS pose refinement
+  paper: https://arxiv.org/pdf/2408.11085
+  code: ''
+  project: https://gsloc.active.vision/
+  datasets:
+  - TBD
+  metrics:
+  - pose refinement error
+  - runtime
+  tags:
+  - localization
+  - pose-refinement
+  - 3dgs
+  - project
+  summary: Efficient camera pose refinement using a 3D Gaussian Splatting scene representation.
+  abstract: Add to localization branch; track initialization sensitivity and per-frame runtime.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/gsloc_pose_refinement_2024.svg
+- id: gsplatloc_2024
+  title: 'GSplatLoc: Grounding Keypoint Descriptors into 3D Gaussian Splatting for Improved Visual Localization'
+  year: 2024
+  venue: arXiv
+  category: Localization / Re-localization
+  modality:
+  - Visual Localization
+  - 3DGS-map
+  representation: 3DGS + keypoint descriptors
+  paper: https://arxiv.org/pdf/2409.16502
+  code: https://github.com/gsplatloc/GSplatLoc
+  project: https://gsplatloc.github.io/
+  datasets:
+  - 7-Scenes
+  - Cambridge Landmarks
+  - TBD
+  metrics:
+  - pose error
+  - matching
+  tags:
+  - localization
+  - keypoints
+  - descriptors
+  - 3dgs
+  - code
+  - project
+  summary: Grounds keypoint descriptors in 3DGS scenes to improve visual localization.
+  abstract: Track descriptor storage in Gaussians and matching/localization runtime.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM; MrNeRF/awesome-3D-gaussian-splatting
+  thumbnail: docs/assets/thumbnails/gsplatloc_2024.svg
+- id: gsplatloc_ultra_2024
+  title: 'GSplatLoc: Ultra-Precise Camera Localization via 3D Gaussian Splatting'
+  year: 2024
+  venue: arXiv
+  category: Localization / Re-localization
+  modality:
+  - RGB-D
+  - Visual Localization
+  - 3DGS-map
+  representation: 3DGS differentiable pose refinement
+  paper: https://arxiv.org/pdf/2412.20056.pdf
+  code: https://github.com/AtticusZeller/GsplatLoc
+  project: ''
+  datasets:
+  - Replica
+  - TUM RGB-D
+  metrics:
+  - translation error
+  - rotation error
+  - ATE
+  tags:
+  - localization
+  - pose-refinement
+  - rgb-d
+  - code
+  - robotics
+  summary: Pose optimization method that localizes RGB-D observations against a pre-built 3D Gaussian scene.
+  abstract: Useful for separating map-building quality from downstream localization accuracy in 3DGS maps.
+  authors: Atticus J. Zeller
+  local_eval: not tested
+  source: MrNeRF/awesome-3D-gaussian-splatting
+  thumbnail: docs/assets/thumbnails/gsplatloc_ultra_2024.svg
+- id: logs_2024
+  title: 'LoGS: Visual Localization via Gaussian Splatting with Fewer Training Images'
+  year: 2024
+  venue: arXiv
+  category: Localization / Re-localization
+  modality:
+  - Visual Localization
+  - 3DGS-map
+  representation: 3DGS localization
+  paper: ''
+  code: ''
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - pose error
+  - training views
+  tags:
+  - localization
+  - few-shot
+  - 3dgs
+  summary: Visual localization using Gaussian Splatting with fewer training images.
+  abstract: Keep as a few-shot/localization method; verify exact links before publishing final curated notes.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/logs_2024.svg
+- id: splatloc_2024
+  title: 'SplatLoc: 3D Gaussian Splatting-based Visual Localization for Augmented Reality'
+  year: 2024
+  venue: arXiv
+  category: Localization / Re-localization
+  modality:
+  - Visual Localization
+  - 3DGS-map
+  - AR
+  representation: 3DGS localization
+  paper: https://arxiv.org/pdf/2409.16502
+  code: https://github.com/zju3dv/SplatLoc
+  project: https://zju3dv.github.io/SplatLoc/
+  datasets:
+  - TBD
+  metrics:
+  - pose error
+  - runtime
+  tags:
+  - localization
+  - ar
+  - 3dgs
+  - code
+  - project
+  summary: 3DGS-based visual localization method oriented toward augmented reality applications.
+  abstract: Track runtime, accuracy, and map construction assumptions for AR deployment.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/splatloc_2024.svg
+- id: glc_slam_2024
+  title: 'GLC-SLAM: Gaussian Splatting SLAM with Efficient Loop Closure'
+  year: 2024
+  venue: arXiv
+  category: Loop closure / Global consistency
+  modality:
+  - Monocular
+  - RGB-D
+  representation: 3DGS + loop closure
+  paper: https://arxiv.org/pdf/2409.10982
+  code: ''
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - loop closure
+  - runtime
+  tags:
+  - loop-closure
+  - global-consistency
+  - paper-only
+  summary: Targets efficient loop closure for Gaussian Splatting SLAM.
+  abstract: Track backend design and whether loop closure changes Gaussian parameters, poses, or both.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/glc_slam_2024.svg
+- id: endogslam_2024
+  title: 'EndoGSLAM: Real-Time Dense Reconstruction and Tracking in Endoscopic Surgeries using Gaussian Splatting'
+  year: 2024
+  venue: arXiv
+  category: Medical / Endoscopic 3DGS-SLAM
+  modality:
+  - Endoscopy
+  - Monocular
+  representation: 3DGS
+  paper: https://arxiv.org/pdf/2403.15124.pdf
+  code: https://github.com/Loping151/EndoGSLAM
+  project: https://endogslam.loping151.com/
+  datasets:
+  - Endoscopy datasets
+  - TBD
+  metrics:
+  - ATE
+  - reconstruction
+  - rendering
+  tags:
+  - endoscopy
+  - medical
+  - dynamic
+  - code
+  - project
+  summary: Specialized Gaussian SLAM for real-time tracking and dense reconstruction in endoscopic scenes.
+  abstract: Track domain-specific assumptions such as near-field lighting, non-rigid tissue motion, and available ground truth.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/endogslam_2024.svg
+- id: mgs_slam_2024
+  title: 'MGS-SLAM: Monocular Sparse Tracking and Gaussian Mapping with Depth Smooth Regularization'
+  year: 2024
+  venue: RAL
+  category: Monocular / RGB-only 3DGS-SLAM
+  modality:
+  - Monocular
+  representation: 3DGS + sparse tracking
+  paper: https://arxiv.org/pdf/2405.06241
+  code: https://github.com/Z-Pengcheng/MGS-SLAM
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - rendering
+  - FPS
+  tags:
+  - monocular
+  - sparse-tracking
+  - depth-regularization
+  - code
+  summary: Monocular Gaussian SLAM with sparse tracking and depth-smooth regularization.
+  abstract: Useful for depth-free or pseudo-depth monocular tracking comparisons.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/mgs_slam_2024.svg
+- id: splat_slam_2024
+  title: 'Splat-SLAM: Globally Optimized RGB-only SLAM with 3D Gaussians'
+  year: 2024
+  venue: arXiv / CVPRW
+  category: Monocular / RGB-only 3DGS-SLAM
+  modality:
+  - RGB-only
+  - Monocular
+  representation: 3DGS + global optimization
+  paper: https://arxiv.org/pdf/2405.16544
+  code: https://github.com/eriksandstroem/Splat-SLAM
+  project: ''
+  datasets:
+  - Replica
+  - TUM RGB-D
+  - ScanNet
+  metrics:
+  - ATE
+  - PSNR
+  - SSIM
+  - FPS
+  tags:
+  - rgb-only
+  - global-optimization
+  - loop-closure
+  - code
+  summary: RGB-only dense SLAM with globally optimized tracking and updates to a Gaussian map.
+  abstract: Important for depth-free SLAM; compare against RGB-D baselines carefully because scale and initialization differ.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/splat_slam_2024.svg
+- id: gs_livm_2024
+  title: 'GS-LIVM: Real-Time Photo-Realistic LiDAR-Inertial-Visual Mapping with Gaussian Splatting'
+  year: 2024
+  venue: arXiv
+  category: Multimodal 3DGS-SLAM
+  modality:
+  - LiDAR
+  - Camera
+  - IMU
+  - Multi-modal
+  representation: 3DGS + LIV mapping
+  paper: https://arxiv.org/pdf/2410.17084
+  code: https://github.com/xieyuser/GS-LIVM
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - mapping
+  - rendering
+  - FPS
+  tags:
+  - lidar
+  - visual
+  - inertial
+  - mapping
+  - code
+  summary: Real-time LiDAR-inertial-visual mapping with photorealistic Gaussian maps.
+  abstract: Record map update rate and sensor-fusion backend.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/gs_livm_2024.svg
+- id: hgs_mapping_2024
+  title: 'HGS-Mapping: Online Dense Mapping Using Hybrid Gaussian Representation in Urban Scenes'
+  year: 2024
+  venue: RAL
+  category: Multimodal 3DGS-SLAM
+  modality:
+  - LiDAR
+  - Outdoor
+  representation: Hybrid Gaussian representation
+  paper: https://arxiv.org/pdf/2403.20159.pdf
+  code: ''
+  project: ''
+  datasets:
+  - KITTI
+  - KITTI-360
+  - TBD
+  metrics:
+  - mapping
+  - rendering
+  - memory
+  tags:
+  - urban
+  - lidar
+  - hybrid
+  - paper-only
+  summary: Online dense mapping in urban scenes with a hybrid Gaussian representation.
+  abstract: Track outdoor map size, update rate, and sensor assumptions.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM; MrNeRF/awesome-3D-gaussian-splatting
+  thumbnail: docs/assets/thumbnails/hgs_mapping_2024.svg
+- id: li_gs_2024
+  title: 'LI-GS: Gaussian Splatting with LiDAR Incorporated for Accurate Large-Scale Reconstruction'
+  year: 2024
+  venue: RAL
+  category: Multimodal 3DGS-SLAM
+  modality:
+  - LiDAR
+  - Camera
+  - Outdoor
+  representation: LiDAR-incorporated 3DGS
+  paper: https://arxiv.org/pdf/2409.12899
+  code: ''
+  project: https://changjianjiang01.github.io/LI-GS/
+  datasets:
+  - KITTI
+  - KITTI-360
+  - TBD
+  metrics:
+  - reconstruction
+  - rendering
+  - geometry
+  tags:
+  - lidar
+  - large-scale
+  - reconstruction
+  - project
+  summary: Uses LiDAR information to improve large-scale Gaussian reconstruction.
+  abstract: Track LiDAR supervision and whether evaluation uses trajectory, geometry, or NVS metrics.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/li_gs_2024.svg
+- id: liv_gaussmap_2024
+  title: 'LIV-GaussMap: LiDAR-Inertial-Visual Fusion for Real-time 3D Radiance Field Map Rendering'
+  year: 2024
+  venue: RAL
+  category: Multimodal 3DGS-SLAM
+  modality:
+  - LiDAR
+  - VIO
+  - Multi-modal
+  representation: 3DGS + LiDAR-Inertial-Visual fusion
+  paper: https://arxiv.org/pdf/2401.14857.pdf
+  code: https://github.com/sheng00125/LIV-GaussMap
+  project: ''
+  datasets:
+  - KITTI
+  - TBD
+  metrics:
+  - trajectory
+  - rendering
+  - FPS
+  tags:
+  - lidar
+  - inertial
+  - visual
+  - fusion
+  - code
+  summary: LiDAR-inertial-visual fusion for real-time radiance-field map rendering with Gaussians.
+  abstract: Track sensor synchronization, odometry source, and whether Gaussians are optimized online.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/liv_gaussmap_2024.svg
+- id: mm3dgs_slam_2024
+  title: 'MM3DGS SLAM: Multi-modal 3D Gaussian Splatting for SLAM Using Vision, Depth, and Inertial Measurements'
+  year: 2024
+  venue: IROS
+  category: Multimodal 3DGS-SLAM
+  modality:
+  - RGB-D
+  - VIO
+  - Multi-modal
+  representation: Multi-modal 3DGS
+  paper: https://arxiv.org/pdf/2404.00923.pdf
+  code: https://github.com/VITA-Group/MM3DGS-SLAM
+  project: https://vita-group.github.io/MM3DGS-SLAM/
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - rendering
+  - FPS
+  tags:
+  - multi-modal
+  - vision-depth-inertial
+  - code
+  - project
+  summary: Multi-modal Gaussian SLAM using vision, depth, and inertial measurements.
+  abstract: Track ablations for each sensor stream and the fusion timing.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM; MrNeRF/awesome-3D-gaussian-splatting
+  thumbnail: docs/assets/thumbnails/mm3dgs_slam_2024.svg
+- id: gs3lam_2024
+  title: 'GS3LAM: Gaussian Semantic Splatting SLAM'
+  year: 2024
+  venue: ACM MM
+  category: Semantic 3DGS-SLAM
+  modality:
+  - RGB-D
+  - Semantic
+  representation: Semantic 3DGS
+  paper: https://openreview.net/pdf?id=juMYrkJlV3
+  code: https://github.com/lif314/GS3LAM
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - mIoU
+  - rendering
+  tags:
+  - semantic
+  - code
+  summary: Semantic Gaussian Splatting SLAM method for integrating semantic cues into Gaussian maps.
+  abstract: Use semantic metrics and trajectory metrics together when reproducing.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/gs3lam_2024.svg
+- id: neds_slam_2024
+  title: 'NEDS-SLAM: A Novel Neural Explicit Dense Semantic SLAM Framework using 3D Gaussian Splatting'
+  year: 2024
+  venue: RAL
+  category: Semantic 3DGS-SLAM
+  modality:
+  - RGB-D
+  - Semantic
+  representation: Explicit semantic 3DGS
+  paper: https://arxiv.org/pdf/2403.11679.pdf
+  code: ''
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - mIoU
+  - rendering
+  tags:
+  - semantic
+  - explicit-map
+  - dense-slam
+  - paper-only
+  summary: Neural explicit dense semantic SLAM framework built around 3D Gaussian Splatting.
+  abstract: Add to semantic 3DGS-SLAM; fill code and benchmark details after checking the official release.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/neds_slam_2024.svg
+- id: sgs_slam_2024
+  title: 'SGS-SLAM: Semantic Gaussian Splatting For Neural Dense SLAM'
+  year: 2024
+  venue: ECCV
+  category: Semantic 3DGS-SLAM
+  modality:
+  - RGB-D
+  - Semantic
+  representation: Semantic 3DGS
+  paper: https://arxiv.org/pdf/2402.03246.pdf
+  code: https://github.com/ShuhongLL/SGS-SLAM
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - mIoU
+  - rendering
+  tags:
+  - semantic
+  - dense-slam
+  - rgb-d
+  - code
+  summary: Adds semantic-aware Gaussian map modeling to dense neural SLAM.
+  abstract: Classify under semantic/open-vocabulary variants and track both SLAM and segmentation metrics.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM; MrNeRF/awesome-3D-gaussian-splatting
+  thumbnail: docs/assets/thumbnails/sgs_slam_2024.svg
+- id: cg_slam_2024
+  title: 'CG-SLAM: Efficient Dense RGB-D SLAM in a Consistent Uncertainty-aware 3D Gaussian Field'
+  year: 2024
+  venue: ECCV
+  category: Visual 3DGS-SLAM
+  modality:
+  - RGB-D
+  representation: Uncertainty-aware 3DGS
+  paper: https://arxiv.org/pdf/2403.16095.pdf
+  code: https://github.com/hjr37/CG-SLAM
+  project: https://zju3dv.github.io/cg-slam/
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - uncertainty
+  - rendering
+  tags:
+  - uncertainty
+  - rgb-d
+  - dense-slam
+  - code
+  - project
+  summary: RGB-D Gaussian SLAM method emphasizing uncertainty-aware and consistent dense mapping.
+  abstract: Good candidate for comparing uncertainty modeling with standard Gaussian-map optimization.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM; MrNeRF/awesome-3D-gaussian-splatting
+  thumbnail: docs/assets/thumbnails/cg_slam_2024.svg
+- id: droid_splat_2024
+  title: 'DROID-Splat: Combining end-to-end SLAM with 3D Gaussian Splatting'
+  year: 2024
+  venue: ICCV Workshop
+  category: Visual 3DGS-SLAM
+  modality:
+  - Monocular
+  - RGB-D
+  representation: End-to-end SLAM + 3DGS
+  paper: https://arxiv.org/pdf/2411.17660
+  code: https://github.com/ChenHoy/DROID-Splat
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - rendering
+  - runtime
+  tags:
+  - droid
+  - end-to-end
+  - code
+  summary: Combines an end-to-end SLAM backbone with Gaussian Splatting map rendering.
+  abstract: Useful as a bridge between learned SLAM frontends and explicit Gaussian maps.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/droid_splat_2024.svg
+- id: monogs_2024
+  title: Gaussian Splatting SLAM / MonoGS
+  year: 2024
+  venue: CVPR
+  category: Visual 3DGS-SLAM
+  modality:
+  - Monocular
+  - Stereo
+  - RGB-D
+  representation: 3DGS
+  paper: https://arxiv.org/pdf/2312.06741.pdf
+  code: https://github.com/muskie82/MonoGS
+  project: https://rmurai.co.uk/projects/GaussianSplattingSLAM/
+  datasets:
+  - Replica
+  - TUM RGB-D
+  metrics:
+  - ATE
+  - PSNR
+  - SSIM
+  - FPS
+  tags:
+  - monocular
+  - stereo
+  - rgb-d
+  - real-time
+  - code
+  - project
+  summary: Monocular-first Gaussian SLAM system, with repository support for stereo and RGB-D inputs.
+  abstract: Good anchor for comparing input modalities under a common 3D Gaussian mapping formulation.
+  authors: See paper
+  local_eval: reproduce pending
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/monogs_2024.svg
+- id: gs_slam_2024
+  title: 'GS-SLAM: Dense Visual SLAM with 3D Gaussian Splatting'
+  year: 2024
+  venue: CVPR
+  category: Visual 3DGS-SLAM
+  modality:
+  - RGB-D
+  representation: 3DGS
+  paper: https://arxiv.org/pdf/2311.11700.pdf
+  code: https://github.com/yanchi-3dv/diff-gaussian-rasterization-for-gsslam
+  project: https://gs-slam.github.io/
+  datasets:
+  - Replica
+  - TUM RGB-D
+  metrics:
+  - ATE
+  - PSNR
+  - SSIM
+  - LPIPS
+  - FPS
+  tags:
+  - dense-slam
+  - tracking
+  - mapping
+  - rgb-d
+  - code
+  - project
+  summary: Dense RGB-D SLAM baseline using differentiable Gaussian splatting for tracking and online map optimization.
+  abstract: A core 3DGS-SLAM reference. Track its camera tracking objective, Gaussian expansion and pruning policy, rendering
+    metrics, and runtime when reproducing.
+  authors: See paper
+  local_eval: reproduce pending
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/gs_slam_2024.svg
+- id: gsfusion_2024
+  title: 'GSFusion: Online RGB-D Mapping Where Gaussian Splatting Meets TSDF Fusion'
+  year: 2024
+  venue: RAL
+  category: Visual 3DGS-SLAM
+  modality:
+  - RGB-D
+  representation: 3DGS + TSDF fusion
+  paper: https://arxiv.org/pdf/2408.12677
+  code: https://github.com/goldoak/GSFusion
+  project: https://gs-fusion.github.io/
+  datasets:
+  - TBD
+  metrics:
+  - reconstruction
+  - rendering
+  - FPS
+  tags:
+  - tsdf
+  - rgb-d
+  - mapping
+  - code
+  - project
+  summary: Combines online RGB-D Gaussian mapping with TSDF-style fusion ideas.
+  abstract: Useful for comparing hybrid geometric fusion with pure Gaussian map optimization.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/gsfusion_2024.svg
+- id: high_fidelity_slam_2024
+  title: High-Fidelity SLAM Using Gaussian Splatting with Rendering-Guided Densification and Regularized Optimization
+  year: 2024
+  venue: arXiv
+  category: Visual 3DGS-SLAM
+  modality:
+  - RGB-D
+  representation: Rendering-guided 3DGS densification
+  paper: https://arxiv.org/pdf/2403.12535.pdf
+  code: ''
+  project: ''
+  datasets:
+  - Replica
+  - TUM RGB-D
+  metrics:
+  - ATE
+  - PSNR
+  - SSIM
+  - LPIPS
+  tags:
+  - rgb-d
+  - rendering-guided
+  - densification
+  - regularization
+  summary: Dense RGB-D Gaussian SLAM focusing on rendering-guided densification and regularized optimization for high-fidelity
+    mapping.
+  abstract: Record whether the method improves unseen-area densification, forgetting resistance, and pose tracking compared
+    with GS-SLAM/SplaTAM-style baselines.
+  authors: Shuo Sun, Malcolm Mielle, Achim J. Lilienthal, Martin Magnusson
+  local_eval: not tested
+  source: MrNeRF/awesome-3D-gaussian-splatting
+  thumbnail: docs/assets/thumbnails/high_fidelity_slam_2024.svg
+- id: photo_slam_2024
+  title: 'Photo-SLAM: Real-time Simultaneous Localization and Photorealistic Mapping for Monocular, Stereo, and RGB-D Cameras'
+  year: 2024
+  venue: CVPR
+  category: Visual 3DGS-SLAM
+  modality:
+  - Monocular
+  - Stereo
+  - RGB-D
+  representation: 3DGS + SLAM frontend
+  paper: https://arxiv.org/pdf/2311.16728.pdf
+  code: https://github.com/HuajianUP/Photo-SLAM
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - PSNR
+  - SSIM
+  - FPS
+  tags:
+  - photorealistic-mapping
+  - monocular
+  - stereo
+  - rgb-d
+  - code
+  summary: Real-time photorealistic mapping across monocular, stereo, and RGB-D settings using a Gaussian map.
+  abstract: Useful for comparing 3DGS maps built on top of classical visual SLAM frontends across multiple camera modes.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM; MrNeRF/awesome-3D-gaussian-splatting
+  thumbnail: docs/assets/thumbnails/photo_slam_2024.svg
+- id: rgbd_gs_icp_slam_2024
+  title: RGBD GS-ICP SLAM
+  year: 2024
+  venue: ECCV
+  category: Visual 3DGS-SLAM
+  modality:
+  - RGB-D
+  representation: 3DGS + ICP
+  paper: https://arxiv.org/pdf/2403.12550.pdf
+  code: https://github.com/Lab-of-AI-and-Robotics/GS_ICP_SLAM
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - ICP residual
+  - rendering
+  tags:
+  - icp
+  - rgb-d
+  - dense-slam
+  - code
+  summary: RGB-D SLAM variant coupling Gaussian maps with ICP-style geometric alignment.
+  abstract: Useful for comparing photometric-only tracking with geometry-aware ICP/GICP Gaussian alignment.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM; MrNeRF/awesome-3D-gaussian-splatting
+  thumbnail: docs/assets/thumbnails/rgbd_gs_icp_slam_2024.svg
+- id: splatam_2024
+  title: 'SplaTAM: Splat, Track & Map 3D Gaussians for Dense RGB-D SLAM'
+  year: 2024
+  venue: CVPR
+  category: Visual 3DGS-SLAM
+  modality:
+  - RGB-D
+  representation: 3DGS
+  paper: https://arxiv.org/pdf/2312.02126.pdf
+  code: https://github.com/spla-tam/SplaTAM
+  project: https://spla-tam.github.io/
+  datasets:
+  - Replica
+  - TUM RGB-D
+  - ScanNet
+  metrics:
+  - ATE
+  - PSNR
+  - SSIM
+  - LPIPS
+  - Depth L1
+  tags:
+  - dense-slam
+  - online-mapping
+  - rgb-d
+  - code
+  - project
+  summary: Online dense RGB-D SLAM with explicit 3D Gaussians and silhouette-aware map expansion.
+  abstract: A strong RGB-D baseline for tracking-and-mapping with explicit Gaussian scene parameters. Keep reproduction notes
+    on keyframe schedule and map expansion.
+  authors: See paper
+  local_eval: reproduce pending
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/splatam_2024.svg
+- id: tambridge_2024
+  title: 'TAMBRIDGE: Bridging Frame-Centered Tracking and 3D Gaussian Splatting for Enhanced SLAM'
+  year: 2024
+  venue: arXiv
+  category: Visual 3DGS-SLAM
+  modality:
+  - Monocular
+  - RGB-D
+  representation: 3DGS
+  paper: https://arxiv.org/pdf/2405.19614
+  code: https://github.com/ZeldaFromHeaven/TAMBRIDGE-DAVID
+  project: https://zeldafromheaven.github.io/TAMBRIDGE/
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - rendering
+  tags:
+  - tracking
+  - mapping
+  - code
+  - project
+  summary: Studies the interaction between frame-centered tracking and Gaussian map optimization.
+  abstract: Useful for organizing methods that explicitly bridge front-end tracking and 3DGS mapping.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/tambridge_2024.svg
+- id: 3dgs_reloc_2023
+  title: '3DGS-ReLoc: 3D Gaussian Splatting for Map Representation and Visual ReLocalization'
+  year: 2023
+  venue: ICCV
+  category: Localization / Re-localization
+  modality:
+  - Visual Localization
+  - 3DGS-map
+  representation: 3DGS relocalization
+  paper: https://openaccess.thecvf.com/content/ICCV2023/papers/Chen_3DGS-ReLoc_3D_Gaussian_Splatting_for_Map_Representation_and_Visual_ReLocalization_ICCV_2023_paper.pdf
+  code: ''
+  project: ''
+  datasets:
+  - TBD
+  metrics:
+  - pose error
+  - relocalization success
+  tags:
+  - relocalization
+  - 3dgs
+  - paper-only
+  summary: Early 3DGS-based map representation for visual relocalization.
+  abstract: Keep as a foundational relocalization entry even if it is not a full online SLAM system.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM
+  thumbnail: docs/assets/thumbnails/3dgs_reloc_2023.svg
+- id: gaussian_slam_2023
+  title: 'Gaussian-SLAM: Photo-realistic Dense SLAM with Gaussian Splatting'
+  year: 2023
+  venue: arXiv
+  category: Visual 3DGS-SLAM
+  modality:
+  - RGB-D
+  representation: 3DGS
+  paper: https://arxiv.org/pdf/2312.10070.pdf
+  code: https://github.com/VladimirYugay/Gaussian-SLAM
+  project: https://vladimiryugay.github.io/gaussian_slam/
+  datasets:
+  - TBD
+  metrics:
+  - ATE
+  - rendering
+  tags:
+  - dense-slam
+  - photorealistic
+  - rgb-d
+  - code
+  - project
+  summary: Early photo-realistic dense SLAM work using Gaussian Splatting for map representation.
+  abstract: Keep as an early baseline in the transition from implicit neural SLAM to explicit Gaussian-map SLAM.
+  authors: See paper
+  local_eval: not tested
+  source: 3D-Vision-World/awesome-NeRF-and-3DGS-SLAM; MrNeRF/awesome-3D-gaussian-splatting
+  thumbnail: docs/assets/thumbnails/gaussian_slam_2023.svg
