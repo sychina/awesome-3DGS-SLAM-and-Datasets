@@ -80,10 +80,12 @@
     .stat .num { display: block; font-size: 34px; font-weight: 860; letter-spacing: -.04em; }
     .stat .label { color: var(--muted); font-size: 13px; }
     .private-note { padding: 16px; border-radius: 18px; border: 1px solid rgba(251,191,36,.35); background: rgba(251,191,36,.09); color: #fde68a; line-height: 1.55; }
-    .filters { position: sticky; top: 0; z-index: 20; padding: 12px 0 18px; background: linear-gradient(180deg, rgba(7,10,19,.96), rgba(7,10,19,.78), rgba(7,10,19,0)); backdrop-filter: blur(14px); }
-    .filter-panel { padding: 16px; }
-    .control-grid { display: grid; grid-template-columns: 1.45fr .65fr .65fr auto; gap: 12px; align-items: center; }
-    .search-wrap { position: relative; }
+    .filters { position: relative; z-index: 10; padding: 0 0 18px; }
+    .search-sticky { position: sticky; top: 0; z-index: 30; padding: 12px 0; background: linear-gradient(180deg, rgba(7,10,19,.96), rgba(7,10,19,.82), rgba(7,10,19,0)); backdrop-filter: blur(14px); }
+    .search-panel { padding: 10px; }
+    .filter-panel { padding: 16px; margin-top: 8px; }
+    .filter-row { display: grid; grid-template-columns: .65fr .65fr auto; gap: 12px; align-items: center; }
+    .search-wrap { position: relative; display: block; }
     .search-wrap span { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted-2); }
     input, select {
       width: 100%; border: 1px solid var(--line); background: rgba(255,255,255,.08); color: var(--text);
@@ -92,7 +94,14 @@
     input { padding-left: 42px; }
     select option { color: #111827; }
     input:focus, select:focus { border-color: rgba(139,92,246,.8); box-shadow: 0 0 0 4px rgba(139,92,246,.18); }
-    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .tag-filter { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 12px; }
+    .tag-filter summary { color: var(--muted); cursor: pointer; user-select: none; list-style: none; display: inline-flex; align-items: center; gap: 10px; }
+    .tag-filter summary::-webkit-details-marker { display: none; }
+    .tag-filter summary::before { content: '▸'; color: var(--muted-2); transition: transform .18s ease; }
+    .tag-filter[open] summary::before { transform: rotate(90deg); }
+    .tag-count, .active-tag { border: 1px solid var(--line); border-radius: 999px; padding: 3px 8px; font-size: 12px; color: var(--muted-2); }
+    .active-tag { color: #ddd6fe; border-color: rgba(139,92,246,.45); background: rgba(139,92,246,.12); }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; max-height: 158px; overflow: auto; padding: 2px 2px 4px; }
     .chip {
       border: 1px solid var(--line); background: rgba(255,255,255,.06); color: var(--muted);
       border-radius: 999px; padding: 8px 11px; cursor: pointer; transition: all .18s ease;
@@ -144,7 +153,7 @@
     .toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%) translateY(18px); opacity: 0; pointer-events: none; background: rgba(15,23,42,.94); border: 1px solid var(--line); color: white; border-radius: 999px; padding: 12px 16px; box-shadow: var(--shadow); transition: .2s ease; z-index: 50; }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
     @media (max-width: 1040px) { .hero-grid { grid-template-columns: 1fr; } .papers-grid { grid-template-columns: 1fr; } .datasets-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
-    @media (max-width: 760px) { .site-shell { width: min(100% - 22px, var(--max)); } .nav { align-items: flex-start; flex-direction: column; } .control-grid { grid-template-columns: 1fr; } .paper-card { grid-template-columns: 1fr; } .cover { min-height: 260px; border-right: 0; border-bottom: 1px solid var(--line); } .cover img { height: 260px; min-height: 260px; } .datasets-grid { grid-template-columns: 1fr; } .filters { position: relative; } }
+    @media (max-width: 760px) { .site-shell { width: min(100% - 22px, var(--max)); } .nav { align-items: flex-start; flex-direction: column; } .filter-row { grid-template-columns: 1fr; } .paper-card { grid-template-columns: 1fr; } .cover { min-height: 260px; border-right: 0; border-bottom: 1px solid var(--line); } .cover img { height: 260px; min-height: 260px; } .datasets-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -158,7 +167,7 @@
         <div class="nav-actions">
           <a class="btn" href="../README.md">README</a>
           <a class="btn" href="#datasets">Datasets</a>
-          <a class="btn primary" href="https://github.com/sychina/awesome-3DGS-SLAM-and-Datasets">GitHub Repo</a>
+          <a class="btn primary" href="https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME">GitHub Repo</a>
         </div>
       </nav>
 
@@ -187,18 +196,27 @@
   </header>
 
   <section class="filters">
-    <div class="site-shell">
-      <div class="panel filter-panel">
-        <div class="control-grid">
+    <div class="search-sticky">
+      <div class="site-shell">
+        <div class="panel search-panel">
           <label class="search-wrap">
             <span aria-hidden="true">Search</span>
             <input id="query" type="search" placeholder="Search title, authors, datasets, tags, summary..." autocomplete="off" />
           </label>
+        </div>
+      </div>
+    </div>
+    <div class="site-shell">
+      <div class="panel filter-panel">
+        <div class="filter-row">
           <select id="yearFilter" aria-label="Filter by year"><option value="">All years</option></select>
           <select id="modalityFilter" aria-label="Filter by modality"><option value="">All modalities</option></select>
           <button class="btn" id="clearFilters" type="button">Clear filters</button>
         </div>
-        <div class="chips" id="tagChips" aria-label="Tag filters"></div>
+        <details class="tag-filter">
+          <summary>Tag filters <span class="tag-count" id="tagCount">0 tags</span><span class="active-tag" id="activeTag" hidden></span></summary>
+          <div class="chips" id="tagChips" aria-label="Tag filters"></div>
+        </details>
       </div>
     </div>
   </section>
@@ -3768,11 +3786,7 @@
             "name": "Replica",
             "type": "Synthetic / reconstructed indoor",
             "url": "https://github.com/facebookresearch/Replica-Dataset",
-            "sensors": [
-                  "mesh",
-                  "rendered RGB-D",
-                  "semantic labels"
-            ],
+            "sensors": "mesh, rendered RGB-D, semantic labels",
             "gt": "dense geometry and semantic annotations",
             "notes": "Controlled indoor benchmark often used for rendering and reconstruction quality"
       },
@@ -3780,11 +3794,7 @@
             "name": "TUM RGB-D",
             "type": "Real indoor RGB-D",
             "url": "https://cvg.cit.tum.de/data/datasets/rgbd-dataset",
-            "sensors": [
-                  "RGB",
-                  "depth",
-                  "accelerometer"
-            ],
+            "sensors": "RGB, depth, accelerometer",
             "gt": "motion-capture camera trajectory",
             "notes": "Classic RGB-D SLAM benchmark; always report sequence name and alignment protocol"
       },
@@ -3792,12 +3802,7 @@
             "name": "ScanNet",
             "type": "Real indoor RGB-D video",
             "url": "https://www.scan-net.org/",
-            "sensors": [
-                  "RGB-D video",
-                  "poses",
-                  "surface reconstruction",
-                  "semantic labels"
-            ],
+            "sensors": "RGB-D video, poses, surface reconstruction, semantic labels",
             "gt": "poses, 3D reconstructions, semantic and instance labels",
             "notes": "Access approval may be required; use official splits when possible"
       },
@@ -3805,11 +3810,7 @@
             "name": "ScanNet++",
             "type": "High-fidelity real indoor",
             "url": "https://scannetpp.mlsg.cit.tum.de/scannetpp/",
-            "sensors": [
-                  "laser scans",
-                  "DSLR images",
-                  "iPhone RGB-D"
-            ],
+            "sensors": "laser scans, DSLR images, iPhone RGB-D",
             "gt": "high-quality geometry and semantic annotations",
             "notes": "Useful for high-fidelity reconstruction and NVS-oriented SLAM evaluation"
       },
@@ -3817,10 +3818,7 @@
             "name": "EuRoC MAV",
             "type": "Visual-inertial MAV",
             "url": "https://projects.asl.ethz.ch/datasets/euroc-mav/",
-            "sensors": [
-                  "stereo cameras",
-                  "IMU"
-            ],
+            "sensors": "stereo cameras, IMU",
             "gt": "accurate motion and structure ground truth",
             "notes": "Useful for stereo/VIO variants of Gaussian-map SLAM"
       },
@@ -3828,10 +3826,7 @@
             "name": "KITTI Odometry",
             "type": "Outdoor driving",
             "url": "https://www.cvlibs.net/datasets/kitti/eval_odometry.php",
-            "sensors": [
-                  "stereo",
-                  "LiDAR-compatible benchmark"
-            ],
+            "sensors": "stereo, LiDAR-compatible benchmark",
             "gt": "GT trajectories for training sequences 00-10",
             "notes": "Useful for large-scale outdoor and LiDAR/vision SLAM"
       },
@@ -3839,10 +3834,7 @@
             "name": "Microsoft 7-Scenes",
             "type": "Real indoor RGB-D",
             "url": "https://www.microsoft.com/en-us/research/project/rgb-d-dataset-7-scenes/",
-            "sensors": [
-                  "RGB",
-                  "depth"
-            ],
+            "sensors": "RGB, depth",
             "gt": "KinectFusion generated 6-DoF camera poses",
             "notes": "室内视觉定位的基础基准测试，常用于评估基于隐式场或 3DGS 的重定位精度。"
       },
@@ -3850,12 +3842,7 @@
             "name": "NCLT Dataset",
             "type": "Outdoor long-term multi-sensor",
             "url": "https://irvlab.engin.umich.edu/resources/nclt-dataset/",
-            "sensors": [
-                  "LiDAR",
-                  "omnidirectional camera",
-                  "RTK GPS",
-                  "IMU"
-            ],
+            "sensors": "LiDAR, omnidirectional camera, RTK GPS, IMU",
             "gt": "RTK GPS and optimized full 6-DoF trajectories",
             "notes": "包含丰富的长周期户外多模态数据。其原始数据集的 ROS1 bag 结构可通过脚本高效迁移至 ROS2 的 mcap 或 db3 格式进行回放与测试。"
       },
@@ -3863,9 +3850,7 @@
             "name": "Cambridge Landmarks",
             "type": "Outdoor large-scale RGB",
             "url": "https://www.repository.cam.ac.uk/handle/1810/251342",
-            "sensors": [
-                  "RGB images"
-            ],
+            "sensors": "RGB images",
             "gt": "Structure from Motion (SfM) reconstructed poses",
             "notes": "评估大尺度室外场景 6-DoF 绝对位姿回归与视觉定位的标准数据集。"
       },
@@ -3873,12 +3858,7 @@
             "name": "KITTI-360",
             "type": "Outdoor large-scale multi-sensor",
             "url": "https://www.cvlibs.net/datasets/kitti-360/",
-            "sensors": [
-                  "LiDAR",
-                  "stereo cameras",
-                  "fisheye cameras",
-                  "RTK GPS"
-            ],
+            "sensors": "LiDAR, stereo cameras, fisheye cameras, RTK GPS",
             "gt": "high-precision dense point clouds, 6-DoF poses, semantic annotations",
             "notes": "提供大尺度室外多传感器融合的原始数据。其时间戳对齐与多视角约束结构，适合通过脚本离线打包为 ROS2 db3 格式，用于验证高保真数字孪生和 Sim-to-Real 的建图渲染效果。"
       },
@@ -3886,11 +3866,7 @@
             "name": "Newer College Dataset",
             "type": "Outdoor long-term multi-sensor",
             "url": "https://ori-drs.github.io/newer-college-dataset/",
-            "sensors": [
-                  "LiDAR",
-                  "stereo cameras",
-                  "IMU"
-            ],
+            "sensors": "LiDAR, stereo cameras, IMU",
             "gt": "ICP registered sub-centimeter point clouds, 6-DoF poses",
             "notes": "记录了长周期、存在结构退化与高动态特征的校园场景。便于通过 ROS 节点流式读取，验证跨层统计退化感知以及联合优化过程中的鲁棒性。"
       },
@@ -3898,10 +3874,7 @@
             "name": "Bonn RGB-D Dynamic",
             "type": "Real indoor dynamic RGB-D",
             "url": "http://www.ipb.uni-bonn.de/data/bonn-rgbd-dynamic/",
-            "sensors": [
-                  "RGB",
-                  "depth"
-            ],
+            "sensors": "RGB, depth",
             "gt": "motion-capture trajectories for camera and dynamic objects",
             "notes": "常用于评估 3DGS-SLAM 系统在包含高动态物体（如走动的人）场景下的前端跟踪鲁棒性与动态遮罩剥离准确度。"
       },
@@ -3909,12 +3882,7 @@
             "name": "TartanAir",
             "type": "Synthetic multi-sensor",
             "url": "https://theairlab.org/tartanair-dataset/",
-            "sensors": [
-                  "stereo RGB",
-                  "depth",
-                  "optical flow",
-                  "IMU"
-            ],
+            "sensors": "stereo RGB, depth, optical flow, IMU",
             "gt": "exact camera poses, dense depth, optical flow, semantic segmentation",
             "notes": "提供极端环境与复杂运动模式的合成数据，传感器模态丰富。适合用于验证多模态融合 3DGS 建图与 Sim-to-Real 的算法迁移能力。"
       },
@@ -4021,7 +3989,7 @@
     }
 
     function normalize(value) { return String(value || '').toLowerCase(); }
-    function textBlob(p) { return normalize([p.title, p.authors, p.venue, p.representation, p.summary, p.abstract, p.modality.join(' '), p.datasets.join(' '), p.tags.join(' ')].join(' ')); }
+    function textBlob(p) { return normalize([p.title, p.authors, p.venue, p.category, p.representation, p.summary, p.abstract, (p.metrics || []).join(' '), p.modality.join(' '), p.datasets.join(' '), p.tags.join(' ')].join(' ')); }
 
     function filteredPapers() {
       return papers
@@ -4062,11 +4030,11 @@
             <span class="cover-caption">${p.modality.join(' / ')} · ${p.representation}</span>
           </div>
           <div class="paper-body">
-            <div class="meta"><span class="venue">${p.venue}</span><span>•</span><span>${p.authors}</span></div>
+            <div class="meta"><span class="venue">${p.venue}</span><span>•</span><span>${p.category || 'Paper'}</span><span>•</span><span>${p.authors}</span></div>
             <h3 class="paper-title"><a href="${p.paper}" target="_blank" rel="noreferrer">${p.title}</a></h3>
             <p class="summary">${p.summary}</p>
             <div class="tags">${p.modality.map(t => `<span class="tag modality">${t}</span>`).join('')}${p.tags.slice(0,7).map(t => `<span class="tag">${t}</span>`).join('')}</div>
-            <div class="abstract">${p.abstract}<br><br><strong>Datasets:</strong> ${p.datasets.join(', ')}<br><strong>Representation:</strong> ${p.representation}</div>
+            <div class="abstract">${p.abstract}<br><br><strong>Datasets:</strong> ${p.datasets.join(', ')}<br><strong>Metrics:</strong> ${(p.metrics || []).join(', ')}<br><strong>Representation:</strong> ${p.representation}</div>
             <div class="card-footer">
               <div class="links">${cardLinks(p)}<button class="toggle" type="button" data-toggle="${p.id}">Show abstract</button></div>
               <span class="eval ${evalClass(p.local_eval)}">Local Eval: ${p.local_eval}</span>
@@ -4089,7 +4057,9 @@
     function fillFilters() {
       unique(papers.map(p => [String(p.year)])).sort(byYearDesc).forEach(year => $('#yearFilter').insertAdjacentHTML('beforeend', `<option value="${year}">${year}</option>`));
       unique(papers.map(p => p.modality)).forEach(m => $('#modalityFilter').insertAdjacentHTML('beforeend', `<option value="${m}">${m}</option>`));
-      $('#tagChips').innerHTML = unique(papers.map(p => p.tags)).map(tag => `<button class="chip" type="button" data-tag="${tag}">${tag}</button>`).join('');
+      const tags = unique(papers.map(p => p.tags));
+      $('#tagChips').innerHTML = tags.map(tag => `<button class="chip" type="button" data-tag="${tag}">${tag}</button>`).join('');
+      $('#tagCount').textContent = `${tags.length} tags`;
     }
 
     function updateControls() {
@@ -4097,6 +4067,11 @@
       $('#yearFilter').value = state.year;
       $('#modalityFilter').value = state.modality;
       document.querySelectorAll('.chip').forEach(chip => chip.classList.toggle('active', chip.dataset.tag === state.tag));
+      const activeTag = $('#activeTag');
+      if (activeTag) {
+        activeTag.hidden = !state.tag;
+        activeTag.textContent = state.tag ? `selected: ${state.tag}` : '';
+      }
     }
 
     function syncFromHash() {
