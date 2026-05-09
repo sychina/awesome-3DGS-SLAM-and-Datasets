@@ -1,37 +1,35 @@
 #!/usr/bin/env python3
 """
-自动为 3DGS-SLAM 论文生成缩略图（网页截图）。
-新增功能：
-  1. 自动将 arxiv PDF 链接替换为摘要页
-  2. 截图成功后自动更新 papers.yml 中的 thumbnail 字段
-  3. --force：强制重新截图，否则跳过已存在的缩略图
-  4. 即使跳过截图，也会自动修复 YAML 中的 thumbnail 字段（svg → jpg）
+自动为 3DGS-SLAM 论文生成缩略图（小体积 + 小尺寸版）。
+- 默认直接使用 paper 链接（包括 PDF），截取 PDF 第一页作为封面。
+- 使用 --use-abs 可将 arxiv/pdf 换成 /abs 摘要页。
+- 使用 --force 强制重新截图所有论文。
+- 缩略图尺寸：800x1100 视口；目标体积 ≤ 150 KB。
 
 用法：
-  跳过已存在的，仅处理新论文：
-    python scripts/generate_thumbnails.py
-  强制重新截图所有论文：
-    python scripts/generate_thumbnails.py --force
+  python scripts/generate_thumbnails.py                 # 默认：直接使用原文链接
+  python scripts/generate_thumbnails.py --use-abs       # 对 arxiv PDF 使用摘要页
+  python scripts/generate_thumbnails.py --force         # 强制重新截图所有论文
 """
 
 import argparse
 import os
 import re
 import sys
-import yaml
 from pathlib import Path
+import yaml
 from PIL import Image
 
-# ---------- 路径配置（相对于项目根目录） ----------
+# ---------- 路径配置 ----------
 PAPERS_FILE = "data/papers.yml"
 OUTPUT_DIR = "docs/assets/thumbnails"
-# -------------------------------------------------
-VIEWPORT_WIDTH = 1200
-VIEWPORT_HEIGHT = 800
-JPEG_QUALITY = 85
-MAX_SIZE_KB = 400
-TIMEOUT = 45_000          # 毫秒
-WAIT_AFTER_LOAD = 2000    # 毫秒
+# -----------------------------
+VIEWPORT_WIDTH = 800
+VIEWPORT_HEIGHT = 1100
+JPEG_QUALITY = 70          # 初始 JPEG 质量
+MAX_SIZE_KB = 75          # 目标最大文件大小（KB）
+TIMEOUT = 60_000
+WAIT_AFTER_LOAD = 3000
 
 
 def load_papers(path: str) -> list:
@@ -45,7 +43,6 @@ def save_papers(path: str, papers: list) -> None:
 
 
 def convert_pdf_to_abs(url: str) -> str:
-    """将 arxiv PDF 链接替换为摘要页链接"""
     pattern = r'(https?://arxiv\.org)/pdf/(\d+\.\d+)(?:\.pdf)?'
     return re.sub(pattern, r'\1/abs/\2', url)
 
@@ -56,28 +53,28 @@ def sanitize_filename(name: str) -> str:
 
 def compress_image(input_path: str, max_kb: int) -> None:
     img = Image.open(input_path)
-    quality = 90
+    quality = 70  # 起始质量更低，更快缩至目标
     while True:
         img.save(input_path, format="JPEG", quality=quality)
-        if os.path.getsize(input_path) / 1024 <= max_kb or quality <= 10:
+        if os.path.getsize(input_path) / 1024 <= max_kb or quality <= 5:
             break
-        quality -= 5
+        quality -= 10
 
+    # 如果质量已降到极低仍超标，缩小尺寸
     if os.path.getsize(input_path) / 1024 > max_kb:
-        width, height = img.size
+        w, h = img.size
         scale = 0.9
         while True:
-            new_w = int(width * scale)
-            new_h = int(height * scale)
-            resized = img.resize((new_w, new_h), Image.Resampling.LANCZOS)
-            resized.save(input_path, format="JPEG", quality=75)
-            if os.path.getsize(input_path) / 1024 <= max_kb or scale < 0.2:
+            nw = max(1, int(w * scale))
+            nh = max(1, int(h * scale))
+            resized = img.resize((nw, nh), Image.Resampling.LANCZOS)
+            resized.save(input_path, format="JPEG", quality=60)
+            if os.path.getsize(input_path) / 1024 <= max_kb or scale < 0.15:
                 break
-            scale -= 0.1
+            scale -= 0.15
 
 
 def update_thumbnail_field(papers: list, paper_id: str, thumbnail_path: str) -> bool:
-    """更新 papers 列表中指定论文的 thumbnail 字段"""
     for paper in papers:
         if paper.get("id") == paper_id:
             paper["thumbnail"] = thumbnail_path
@@ -86,9 +83,9 @@ def update_thumbnail_field(papers: list, paper_id: str, thumbnail_path: str) -> 
 
 
 def main():
-    parser = argparse.ArgumentParser(description="生成论文缩略图")
-    parser.add_argument("--force", action="store_true",
-                        help="强制重新截图，覆盖已有缩略图")
+    parser = argparse.ArgumentParser(description="生成论文缩略图（轻量版）")
+    parser.add_argument("--force", action="store_true", help="强制重新截图，覆盖已存在的缩略图")
+    parser.add_argument("--use-abs", action="store_true", help="将 arxiv PDF 链接转换为摘要页再截图（默认直接使用原始链接）")
     args = parser.parse_args()
 
     try:
@@ -97,7 +94,6 @@ def main():
         print("请先安装 Playwright: pip install playwright && playwright install chromium")
         sys.exit(1)
 
-    # 切换到项目根目录
     script_dir = Path(__file__).resolve().parent
     project_root = script_dir.parent
     os.chdir(project_root)
@@ -115,11 +111,13 @@ def main():
         return
 
     print(f"共加载 {len(papers)} 篇论文\n")
+    print(f"截图视口: {VIEWPORT_WIDTH}x{VIEWPORT_HEIGHT}, 目标体积 ≤ {MAX_SIZE_KB} KB")
+    if args.use_abs:
+        print("ℹ️  已启用 --use-abs，将对 arxiv PDF 使用摘要页截图。\n")
 
-    # 统计
-    fresh_screenshots = 0      # 新截图
-    skipped_existing = 0       # 已存在，跳过截图
-    yaml_updates = 0           # 更新了 thumbnail 字段
+    fresh_screenshots = 0
+    skipped_existing = 0
+    yaml_updates = 0
     skipped_no_url = 0
     failed_screenshot = 0
 
@@ -127,7 +125,7 @@ def main():
         browser = p.chromium.launch(headless=True)
         context = browser.new_context(
             viewport={"width": VIEWPORT_WIDTH, "height": VIEWPORT_HEIGHT},
-            user_agent="Mozilla/5.0 ..."
+            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/..."
         )
 
         for idx, paper in enumerate(papers, 1):
@@ -137,38 +135,30 @@ def main():
             if not paper_url:
                 print(f"[{idx}/{len(papers)}] ⏭ 跳过 {paper_id}（无 paper URL）")
                 skipped_no_url += 1
-                # 即使没有 URL，如果已有 jpg 文件，也可以修正 YAML
-                # 但这里我们保持原样，因为无法确定正确的快照
                 continue
 
-            # 目标文件路径
             output_name = sanitize_filename(paper_id) + ".jpg"
             output_path = os.path.join(OUTPUT_DIR, output_name)
             relative_path = os.path.join(OUTPUT_DIR, output_name).replace("\\", "/")
 
-            # 检查是否已存在
-            file_exists = os.path.isfile(output_path)
-
-            # 决定是否需要截图
-            need_screenshot = not file_exists or args.force
-
-            if not need_screenshot:
-                # 跳过截图，但检查 YAML 字段是否需要修正
+            if not args.force and os.path.isfile(output_path):
                 current_thumb = paper.get("thumbnail", "")
                 if current_thumb != relative_path:
-                    # 更新 YAML
                     update_thumbnail_field(papers, paper_id, relative_path)
                     yaml_updates += 1
-                    print(f"[{idx}/{len(papers)}] 🔄 已修复 YAML 字段 → {relative_path}")
+                    print(f"[{idx}/{len(papers)}] 🔄 已修复 YAML → {relative_path}")
                 else:
                     print(f"[{idx}/{len(papers)}] ⏭ 缩略图已存在，跳过 {paper_id}")
                 skipped_existing += 1
                 continue
 
-            # --- 需要截图 ---
-            screenshot_url = convert_pdf_to_abs(paper_url)
-            if screenshot_url != paper_url:
-                print(f"[{idx}/{len(papers)}] 🔄 PDF → 摘要页: {paper_url}")
+            # 确定截图 URL
+            screenshot_url = paper_url
+            if args.use_abs:
+                screenshot_url = convert_pdf_to_abs(paper_url)
+
+            if args.use_abs and screenshot_url != paper_url:
+                print(f"[{idx}/{len(papers)}] 🔄 使用摘要页: {paper_url}")
 
             print(f"[{idx}/{len(papers)}] 📷 正在截图 {paper_id}")
 
@@ -177,6 +167,9 @@ def main():
             try:
                 page.goto(screenshot_url, wait_until="networkidle", timeout=TIMEOUT)
                 page.wait_for_timeout(WAIT_AFTER_LOAD)
+                if screenshot_url.endswith(".pdf") or "/pdf/" in screenshot_url:
+                    page.wait_for_timeout(2000)
+
                 screenshot_bytes = page.screenshot(type="jpeg", quality=JPEG_QUALITY, full_page=False)
                 with open(output_path, "wb") as f:
                     f.write(screenshot_bytes)
@@ -191,7 +184,6 @@ def main():
                 page.close()
 
             if success:
-                # 更新 YAML 字段
                 if update_thumbnail_field(papers, paper_id, relative_path):
                     yaml_updates += 1
                     print(f"  ✅ 已更新 thumbnail → {relative_path}")
@@ -199,12 +191,10 @@ def main():
 
         browser.close()
 
-    # 写回 YAML
     if yaml_updates > 0:
         save_papers(papers_path, papers)
         print(f"\n💾 已更新 {yaml_updates} 个 thumbnail 字段到 {papers_path}")
 
-    # 总结
     print("\n" + "=" * 60)
     print("📊 执行完成！")
     print(f"   论文总数:        {len(papers)}")
@@ -216,7 +206,7 @@ def main():
     print("=" * 60)
 
     if not args.force:
-        print("\n💡 提示：若要强制重新生成所有缩略图，请使用 --force")
+        print("\n💡 提示：使用 --force 强制重新生成所有缩略图（会覆盖已有图片）")
 
 
 if __name__ == "__main__":
