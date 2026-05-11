@@ -24,8 +24,8 @@ from PIL import Image
 PAPERS_FILE = "data/papers.yml"
 OUTPUT_DIR = "docs/assets/thumbnails"
 # -----------------------------
-VIEWPORT_WIDTH = 800
-VIEWPORT_HEIGHT = 1100
+VIEWPORT_WIDTH = 600
+VIEWPORT_HEIGHT = 800
 JPEG_QUALITY = 70          # 初始 JPEG 质量
 MAX_SIZE_KB = 75          # 目标最大文件大小（KB）
 TIMEOUT = 60_000
